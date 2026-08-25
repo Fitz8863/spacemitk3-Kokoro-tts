@@ -1,0 +1,60 @@
+初始化 TTS 引擎 (kokoro:zh)...
+[Kokoro] All required files for zh are ready in /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh
+[KokoroVoiceManager] Loaded voice: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/voices/zf_001.npy (510 style vectors)
+[Kokoro] SpaceMIT EP initialized (ep_threads=2, affinity=8;10)
+[Kokoro] Provider: spacemit
+[0;93m2026-08-25 19:58:59.526343988 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.526860127 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.527231690 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.527427429 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.527729871 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv_1 [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.527806701 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.530231570 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.534360223 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.546008348 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.546265042 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose_1 [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 19:58:59.546424867 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 19:58:59.719232080 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.720416558 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.722718643 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.723354317 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.723825583 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.723947452 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 19:58:59.724297766 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv_1 [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.724325140 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.735084478 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 19:58:59.735391295 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose_1 [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 19:58:59.735563078 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose [ConvTranspose] has been disabled.[m
+[KokoroZh] Loaded 172 tokenizer entries from /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/tokenizer.json
+[KokoroZh] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] cpp-pinyin initialized successfully.
+[KokoroPhonemizer] espeak-ng detected, English support enabled.
+[KokoroPhonemizer] English lexicon: gold=90201 silver=93361
+[Kokoro] Warming up model...
+[Kokoro] Model warmed up in 5994ms (1 runs, 63 tokens)
+[Kokoro] Backend initialized successfully (kokoro-zh)
+引擎: Kokoro-TTS (kokoro-zh)
+采样率: 24000 Hz
+说话人数: 1
+
+进入交互模式，输入文本后按 Enter 合成 (输入 q 退出)
+----------------------------------------
+> 合成中: "你好，重新编译后的第一条文本。"
+采样率: 24000 Hz
+时长: 3950 ms
+处理时间: 1801 ms
+RTF: 0.455949
+已保存: /tmp/kokoro-final-interactive.wav
+
+> 合成中: "你好，重新编译后的第二条文本。"
+采样率: 24000 Hz
+时长: 3950 ms
+处理时间: 1694 ms
+RTF: 0.428861
+已保存: /tmp/kokoro-final-interactive.wav
+
+> 再见!
+/tmp/kokoro-final-interactive.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 24000 Hz
+-rw-rw-r-- 1 spacemit spacemit 186K Aug 25 19:59 /tmp/kokoro-final-interactive.wav
+No tts_file_demo remains

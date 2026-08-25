@@ -73,10 +73,21 @@
 - [`docs/evidence/system-ort-interactive-short.log`](docs/evidence/system-ort-interactive-short.log)
 - [`docs/evidence/system-ort-linkage.txt`](docs/evidence/system-ort-linkage.txt)
 - [`docs/evidence/system-ort-cmake-reconfigure.log`](docs/evidence/system-ort-cmake-reconfigure.log)
+- [`docs/evidence/final-system-rebuild.log`](docs/evidence/final-system-rebuild.log)
+- [`docs/evidence/final-system-e2e.log`](docs/evidence/final-system-e2e.log)
+- [`docs/evidence/final-system-interactive.log`](docs/evidence/final-system-interactive.log)
+- [`docs/evidence/final-system-linkage.log`](docs/evidence/final-system-linkage.log)
 
 其中 `final-repo-*-a100.log` 是清理前完成的全新板端构建后的最终端到端复测日志；两次均生成了可播放的 24 kHz WAV，且运行退出后未留下独立的 `tts_file_demo` 进程。`core2-en-a100-short.log` 和 `core2-zh-a100.log` 是新增的部分 A100 核验证日志，包含 EP 初始化时打印的实际 affinity；`core2-en-a100.log` 另外记录了长文本压力测试。
 
 `system-ort-interactive-short.log` 是改为系统安装 ORT/EP 后的交互式复核：使用 `--cores 8,10`，两条短中文输入分别得到 RTF `0.467` 和 `0.446`，都覆盖写入同一个 WAV；`system-ort-linkage.txt` 记录了 CMake 命中 `/usr/local` 以及板端 `ldd` 的实际解析结果；`system-ort-cmake-reconfigure.log` 记录了清理旧缓存后重新配置和构建成功。
+
+在本次提交前又执行了一次**删除 `build-k3` 后的干净板端重编译**，并完成最终端到端复测：
+
+- `final-system-rebuild.log`：从零开始配置和编译，最终 `tts_file_demo` 构建成功；
+- `final-system-e2e.log`：A100 `8-15`，英文 warm RTF `0.324628/0.323967`，中文 warm RTF `0.261944/0.258889`，英文和中文均生成 `24 kHz / 16-bit / mono` WAV；
+- `final-system-interactive.log`：A100 `8,10`，两条交互式中文请求 RTF `0.455949/0.428861`，均覆盖写入同一个 WAV，退出后没有残留 `tts_file_demo`；
+- `final-system-linkage.log`：干净构建的 CMake cache、ELF 和 `ldd` 均确认 ORT/EP 来自 `/usr/local`。
 
 参考 WAV：
 

@@ -1,0 +1,22 @@
+# clean rebuild linkage
+2026-08-25T19:59:35+08:00
+ONNXRUNTIME_INCLUDE_AUTO:PATH=/usr/local/include
+ONNXRUNTIME_INCLUDE_DIR:PATH=
+ONNXRUNTIME_LIB:STRING=
+ONNXRUNTIME_LIB_AUTO:FILEPATH=/usr/local/lib/libonnxruntime.so
+SPACEMIT_EP_LIB:FILEPATH=/usr/local/lib/libspacemit_ep.so
+SPACEMIT_ORT_INCLUDE_DIR:PATH=/usr/local/include
+SPACEMIT_ORT_ROOT:PATH=
+ 0x0000000000000001 (NEEDED)             Shared library: [libonnxruntime.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libspacemit_ep.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libfftw3f.so.3]
+ 0x0000000000000001 (NEEDED)             Shared library: [libcurl.so.4]
+ 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-riscv64-lp64d.so.1]
+ 0x000000000000001d (RUNPATH)            Library runpath: [/usr/local/lib:]
+	libonnxruntime.so.1 => /usr/local/lib/libonnxruntime.so.1 (0x0000003fae400000)
+	libspacemit_ep.so.2 => /usr/local/lib/libspacemit_ep.so.2 (0x0000003fadc00000)
+spacemit/model-zoo-tts/build-k3/bin/tts_file_demo: ELF 64-bit LSB pie executable, UCB RISC-V, RVC, double-float ABI, version 1 (GNU/Linux), dynamically linked, interpreter /lib/ld-linux-riscv64-lp64d.so.1, BuildID[sha1]=e2520f2e5cfe72d588ad4104169af1d7b9c78c2f, for GNU/Linux 4.15.0, not stripped
