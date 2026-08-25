@@ -5,81 +5,130 @@ script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 # shellcheck source=affinity.sh
 source "$script_dir/affinity.sh"
 
-if [[ $# -lt 3 ]]; then
-  echo "Usage: $0 <zh|en> <output.wav> <text> [repeat] [--cores CORE_LIST]" >&2
-  echo "       $0 <zh|en> <output.wav> --interactive [--cores CORE_LIST]" >&2
-  echo "  CORE_LIST: comma/range list, e.g. 8,10,12 or 8-15" >&2
-  exit 2
-fi
+usage() {
+  cat >&2 <<USAGE
+用法:
+  $0 <zh|en> <output.wav> <text> [repeat] [选项]
+  $0 <zh|en> <output.wav> --interactive [选项]
+  $0 <zh|en> --list-voices [--voices-dir DIR]
 
+选项:
+  --voice NAME             选择音色，如 af_bella、am_echo、zf_002
+  --voices-dir DIR         外部音色目录
+  --voice-path FILE        直接指定音色文件
+  --cores LIST             选择 A100 核，如 8,10 或 8-15（默认 8-15）
+  --repeat N               重复合成 N 次
+  --interactive            交互式常驻输入
+  --list-voices            列出实际可用音色
+USAGE
+}
+
+[[ $# -ge 1 ]] || { usage; exit 2; }
 lang="$1"
-out="$2"
-interactive=false
-if [[ "$3" == "--interactive" ]]; then
-  interactive=true
-  shift 3
-else
-  text="$3"
-  shift 3
-fi
+shift
+case "$lang" in
+  zh|en) ;;
+  *) echo "language must be zh or en" >&2; exit 2;;
+esac
 
-repeat=1
+list_voices=false
+interactive=false
+out=''
+text=''
+voice=''
+voices_dir=''
+voice_path=''
+repeat='1'
 cores="${SPACEMIT_TTS_EP_CORES:-${SPACEMIT_TTS_EP_AFFINITY:-8-15}}"
+positional=()
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --list-voices)
+      list_voices=true; shift;;
     --interactive)
-      if "$interactive"; then
-        echo "duplicate --interactive" >&2
-        exit 2
-      fi
-      interactive=true
-      shift
-      ;;
+      interactive=true; shift;;
+    --voice|--speaker)
+      [[ $# -ge 2 ]] || { echo "$1 requires a voice name" >&2; exit 2; }
+      voice="$2"; shift 2;;
+    --voice=*|--speaker=*)
+      voice="${1#*=}"; shift;;
+    --voices-dir)
+      [[ $# -ge 2 ]] || { echo "$1 requires a directory" >&2; exit 2; }
+      voices_dir="$2"; shift 2;;
+    --voices-dir=*)
+      voices_dir="${1#*=}"; shift;;
+    --voice-path)
+      [[ $# -ge 2 ]] || { echo "$1 requires a file" >&2; exit 2; }
+      voice_path="$2"; shift 2;;
+    --voice-path=*)
+      voice_path="${1#*=}"; shift;;
     --cores|--ep-cores)
-      if [[ $# -lt 2 ]]; then
-        echo "$1 requires a core list" >&2
-        exit 2
-      fi
-      cores="$2"
-      shift 2
-      ;;
+      [[ $# -ge 2 ]] || { echo "$1 requires a core list" >&2; exit 2; }
+      cores="$2"; shift 2;;
     --cores=*|--ep-cores=*)
-      cores="${1#*=}"
+      cores="${1#*=}"; shift;;
+    --repeat)
+      [[ $# -ge 2 ]] || { echo "$1 requires a positive integer" >&2; exit 2; }
+      repeat="$2"; shift 2;;
+    --repeat=*)
+      repeat="${1#*=}"; shift;;
+    --)
       shift
-      ;;
-    '')
-      echo "unexpected empty argument" >&2
-      exit 2
-      ;;
+      while [[ $# -gt 0 ]]; do positional+=("$1"); shift; done;;
+    -*)
+      echo "unknown argument: $1" >&2; usage; exit 2;;
     *)
-      if [[ "$interactive" == false && "$1" =~ ^[1-9][0-9]*$ && "$repeat" == 1 ]]; then
-        repeat="$1"
-        shift
-      else
-        echo "unknown argument: $1" >&2
-        exit 2
-      fi
-      ;;
+      positional+=("$1"); shift;;
   esac
 done
 
-# K3 topology: CPU 0-7 = X100, CPU 8-15 = A100.  The selected list is passed
-# to the EP worker pool; the application process itself need not be moved.
+if "$list_voices"; then
+  [[ ${#positional[@]} -eq 0 ]] || { echo "--list-voices does not take positional arguments" >&2; exit 2; }
+  args=("$lang" --list-voices)
+  [[ -n "$voices_dir" ]] && args+=(--voices-dir "$voices_dir")
+  exec "$script_dir/run.sh" "${args[@]}"
+fi
+
+if [[ ${#positional[@]} -gt 0 ]]; then
+  out="${positional[0]}"
+  positional=("${positional[@]:1}")
+fi
+if "$interactive"; then
+  [[ ${#positional[@]} -eq 0 ]] || { echo "interactive mode does not take text" >&2; usage; exit 2; }
+else
+  [[ ${#positional[@]} -gt 0 ]] || { echo "missing text (or use --interactive)" >&2; usage; exit 2; }
+  text="${positional[0]}"
+  positional=("${positional[@]:1}")
+  if [[ ${#positional[@]} -gt 0 && "$repeat" == 1 && "${positional[0]}" =~ ^[1-9][0-9]*$ ]]; then
+    repeat="${positional[0]}"
+    positional=("${positional[@]:1}")
+  fi
+fi
+[[ ${#positional[@]} -eq 0 ]] || { echo "too many positional arguments: ${positional[*]}" >&2; usage; exit 2; }
+[[ -n "$out" ]] || { echo "missing output.wav" >&2; usage; exit 2; }
+[[ "$repeat" =~ ^[1-9][0-9]*$ ]] || { echo "repeat must be a positive integer" >&2; exit 2; }
+
+# K3 topology: 0-7=X100, 8-15=A100.  Only EP workers are pinned.
 ep_affinity=$(normalize_core_list "$cores")
 core_count=$(core_count_from_affinity "$ep_affinity")
 if [[ -n "${SPACEMIT_TTS_EP_THREADS:-}" && "$SPACEMIT_TTS_EP_THREADS" != "$core_count" ]]; then
-  echo "SPACEMIT_TTS_EP_THREADS=$SPACEMIT_TTS_EP_THREADS does not match the selected core count $core_count" >&2
+  echo "SPACEMIT_TTS_EP_THREADS=$SPACEMIT_TTS_EP_THREADS does not match selected core count $core_count" >&2
   exit 2
 fi
 export SPACEMIT_TTS_EP_THREADS="$core_count"
 export SPACEMIT_TTS_EP_CORES="$cores"
 export SPACEMIT_TTS_EP_AFFINITY="$ep_affinity"
-# Warm up once during engine initialization; the first user request then uses
-# the same already-compiled EP shapes as subsequent requests.
 export SPACEMIT_TTS_WARMUP_RUNS="${SPACEMIT_TTS_WARMUP_RUNS:-1}"
 
+args=("$lang" "$out")
 if "$interactive"; then
-  exec "$script_dir/run.sh" "$lang" "$out" --interactive spacemit "$ep_affinity"
+  args+=(--interactive)
 else
-  exec "$script_dir/run.sh" "$lang" "$out" "$text" spacemit "$ep_affinity" "$repeat"
+  args+=("$text")
 fi
+args+=(--provider spacemit --cores "$ep_affinity" --repeat "$repeat")
+[[ -n "$voice" ]] && args+=(--voice "$voice")
+[[ -n "$voices_dir" ]] && args+=(--voices-dir "$voices_dir")
+[[ -n "$voice_path" ]] && args+=(--voice-path "$voice_path")
+exec "$script_dir/run.sh" "${args[@]}"

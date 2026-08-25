@@ -134,8 +134,14 @@ flowchart LR
 ├── official-model-zoo/
 │   ├── v1.0-en/                    # 已提交英文 ONNX 和必要资产
 │   └── v1.1-zh/                    # 中文小型资产；ONNX 首次运行下载
+├── voices/                         # 独立音色目录（按 en/zh 分类）
+│   ├── README.md
+│   ├── manifest.json
+│   ├── en/                         # af_heart、af_bella、am_echo
+│   └── zh/                         # zf_001、zf_002、zf_xiaobei
 ├── scripts/
 │   ├── download_models.sh          # 手工下载两套官方包并校验 MD5
+│   ├── import_kokoro_voices.py    # 将官方 .pt 转为 .npy
 │   └── prepare_local_deps.sh       # 无 root 下载/解压 riscv64 开发依赖
 └── spacemit/
     ├── case/model-zoo-k3/
@@ -172,6 +178,66 @@ flowchart LR
 ├── kokoro-v1.0-en/
 └── kokoro-v1.1-zh/
 ```
+
+## 6. 独立音色目录和运行时选择
+
+仓库将音色从 ONNX 模型包中单独拆出，目录为 `voices/en` 和 `voices/zh`。当前提交的可直接使用音色是：
+
+| 语言 | 当前提交 | 格式 |
+|---|---|---|
+| 英文 | `af_heart`、`af_bella`、`am_echo` | `.bin` / `.npy` |
+| 中文 | `zf_001`、`zf_002`、`zf_xiaobei` | `.npy` / `.bin` |
+
+官方音色总量和仓库实际提交量要区分：Kokoro v1.0 英文公开 54 个音色，`Kokoro-82M-v1.1-zh` 公开 103 个音色；受下载限流和仓库体积控制，本仓库只提交已经下载、转换、形状校验并在板端验证的批次。完整清单和每个文件的形状记录在 [`voices/manifest.json`](voices/manifest.json)。
+
+列出当前目录中的实际文件：
+
+```bash
+cd spacemit/case/model-zoo-k3
+./run_a100.sh en --list-voices
+./run_a100.sh zh --list-voices
+```
+
+指定音色运行：
+
+```bash
+./run_a100.sh en en-bella.wav \
+  'This is a Bella voice test.' \
+  --voice af_bella --cores 8,10
+
+./run_a100.sh en en-echo.wav \
+  'This is an Echo voice test.' \
+  --voice am_echo --cores 8,10
+
+./run_a100.sh zh zh-002.wav \
+  '这是第二个中文音色测试。' \
+  --voice zf_002 --cores 8,10
+
+./run_a100.sh zh interactive.wav \
+  --interactive --voice zf_002 --cores 8,10
+```
+
+也可以使用独立的外部音色目录，目录中放 `<voice>.bin` 或 `<voice>.npy`：
+
+```bash
+./run_a100.sh zh output.wav '你好' \
+  --voices-dir /data/kokoro-voices/zh \
+  --voice zf_002
+```
+
+加载优先级为：`--voice-path` / `KOKORO_VOICE_PATH` 单文件，其次是 `--voices-dir` / `KOKORO_VOICES_DIR`，最后回退到 ONNX 模型旁的 `voices/`。官方 `.pt` 音色不能只改扩展名，使用导入脚本转换：
+
+```bash
+python3 scripts/import_kokoro_voices.py \
+  --language zh --voice zf_003 --voice zm_009
+
+# 离线转换已经下载到本地的 .pt 文件
+python3 scripts/import_kokoro_voices.py \
+  --language en --source-dir /data/kokoro-pt-voices \
+  --voice af_nova --voice bf_emma
+```
+
+脚本支持 `--keep-going`、`--force` 和 `--limit`，下载站点限流时可以分批、断点式继续。不会将 `.pt`、压缩包和下载缓存提交到仓库。更多说明见 [`voices/README.md`](voices/README.md)。
 
 ## 6. 板端依赖
 
@@ -444,7 +510,7 @@ SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对
 2. 英文音频时长未完全复现官方表的 4950 ms。
 3. 中文 ONNX 超过 GitHub 普通 Git 单文件限制，首次使用需联网下载或手工放入缓存。
 4. 采样率固定为 24 kHz。
-5. 当前案例仅验证官方包内的预置音色，不包含训练、微调、参考音频克隆或自定义声线导出。
+5. 当前案例验证的是官方预置 style tensor 的加载，不包含训练、微调、参考音频克隆或自定义声线导出；新增音色必须先转换成 SpaceMIT 支持的 `.bin`/`.npy` 格式。
 6. `espeak-ng` 和词典共同承担英文 frontend；其他系统复用时应先检查 `command -v espeak-ng`。
 7. 当前 fallback 节点列表针对测试时的 SpaceMIT EP 2.0.6；升级 EP 后应重新验证分图、输出形状、音质和 RTF，不能直接假定仍需相同 fallback。
 
@@ -465,13 +531,14 @@ SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对
 - `scripts/install_spacemit_ort.sh`
   - 将 SpaceMIT ORT/EP Bundle 安装到 `/usr/local`，并注册动态链接器搜索路径。
 - `run_a100.sh`
+  - 支持 `--voice`、`--voices-dir`、`--list-voices`；
   - 支持 `--cores 8,10`、`--cores 8-11` 等具体核列表；
   - 根据所选核数自动设置 EP worker 数，并检查手工设置的线程数是否匹配；
   - 默认使用 A100 `8-15` 和一次 warmup。
 - `affinity.sh`
   - 统一解析逗号、范围、空格和分号格式，转换为 SpaceMIT EP 的分号列表。
 - `run.sh`
-  - 支持语言、provider、具体 EP 核列表、repeat 和可配置 ORT 根目录；
+  - 支持音色目录、单文件音色覆盖、语言、provider、具体 EP 核列表、repeat 和可配置 ORT 根目录；
   - 英文使用仓库内模型，缺少中文 ONNX 时走官方自动下载。
 
 ## 13. 验证清单
@@ -489,6 +556,8 @@ cmake --build spacemit/model-zoo-tts/build-k3 -j4
 并完成：
 
 - 中英文 A100 端到端 WAV 生成；
+- `af_bella`、`am_echo`、`zf_002` 三个独立目录音色在板端实际加载并生成 WAV；
+- 交互模式连续输入两句并覆盖同一个输出文件；
 - WAV 格式检查：16-bit PCM、mono、24000 Hz；
 - 1/2/4/8 worker 性能矩阵；
 - `/proc/<pid>/task/*/status` A100 affinity 验证；

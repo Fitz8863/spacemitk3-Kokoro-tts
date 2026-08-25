@@ -432,28 +432,52 @@ ErrorInfo KokoroBackend::initialize(const TtsConfig& config) {
         }
     }
 
-    // Load voice (skipped in token-injection mode, where style comes from the file)
+    // Load voice (skipped in token-injection mode, where style comes from the file).
+    // Resolution order is intentionally explicit:
+    //   1. KOKORO_VOICE_PATH: one exact file;
+    //   2. KOKORO_VOICES_DIR/<voice-name>.(bin|npy): external voice directory;
+    //   3. <active-model-dir>/voices/<voice-name>.(bin|npy): model package fallback.
+    // This keeps model packages self-contained while allowing a shared voice
+    // directory to be mounted independently of a large ONNX model package.
     const bool inject_mode = (std::getenv("KOKORO_TOKEN_IDS_FILE") != nullptr);
     if (!inject_mode) {
         std::string voice_path;
-        if (const char* voice_override = std::getenv("KOKORO_VOICE_PATH")) {
+        const char* voice_override = std::getenv("KOKORO_VOICE_PATH");
+        if (voice_override != nullptr && *voice_override != '\0') {
             voice_path = voice_override;
         } else {
             const std::string voice_name =
                 (config.voice.empty() || config.voice == "default")
                     ? getVoiceName()
                     : config.voice;
-            const fs::path voice_base =
-                fs::path(active_model_dir_) / "voices" / voice_name;
-            if (fs::exists(voice_base.string() + ".bin")) {
-                voice_path = voice_base.string() + ".bin";
-            } else {
-                voice_path = voice_base.string() + ".npy";
+            std::vector<fs::path> voice_dirs;
+            if (const char* voices_dir = std::getenv("KOKORO_VOICES_DIR")) {
+                if (*voices_dir != '\0') {
+                    voice_dirs.emplace_back(voices_dir);
+                }
+            }
+            voice_dirs.emplace_back(fs::path(active_model_dir_) / "voices");
+
+            for (const auto& voice_dir : voice_dirs) {
+                const fs::path voice_base = voice_dir / voice_name;
+                if (fs::exists(voice_base.string() + ".bin")) {
+                    voice_path = voice_base.string() + ".bin";
+                    break;
+                }
+                if (fs::exists(voice_base.string() + ".npy")) {
+                    voice_path = voice_base.string() + ".npy";
+                    break;
+                }
+            }
+            if (voice_path.empty()) {
+                voice_path = (voice_dirs.front() / voice_name).string() +
+                    ".npy";
             }
         }
         if (!fs::exists(voice_path)) {
             return ErrorInfo::error(ErrorCode::MODEL_NOT_FOUND,
-                "Kokoro voice file not found at: " + voice_path);
+                "Kokoro voice file not found at: " + voice_path +
+                "; set KOKORO_VOICES_DIR or install the voice beside the model");
         }
         if (!voice_manager_.loadVoice(voice_path)) {
             return ErrorInfo::error(ErrorCode::MODEL_NOT_FOUND,

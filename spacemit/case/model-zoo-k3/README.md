@@ -95,3 +95,47 @@ SPACEMIT_TTS_EP_CORES=8,11 ./run_a100.sh zh output.wav '这是一个语音合成
 SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
   ./run_a100.sh zh output.wav '这是一个语音合成测试'
 ```
+
+## 音色目录和运行时切换
+
+仓库根目录的 `voices/en`、`voices/zh` 是独立音色目录，运行脚本会按语言自动选择对应目录。查看当前实际已经安装的音色：
+
+```bash
+./run_a100.sh en --list-voices
+./run_a100.sh zh --list-voices
+```
+
+选择音色名称：
+
+```bash
+./run_a100.sh en bella.wav \
+  'This is a Bella voice test.' \
+  --voice af_bella --cores 8,10
+
+./run_a100.sh en echo.wav \
+  'This is an Echo voice test.' \
+  --voice am_echo --cores 8,10
+
+./run_a100.sh zh zf002.wav \
+  '这是第二个中文音色测试。' \
+  --voice zf_002 --cores 8,10
+```
+
+交互模式启动时固定一个音色，后续每行文本都会使用该音色并覆盖同一个输出 WAV：
+
+```bash
+./run_a100.sh zh interactive.wav \
+  --interactive --voice zf_002 --cores 8,10
+```
+
+也可从模型目录之外加载音色：
+
+```bash
+./run_a100.sh zh output.wav '你好' \
+  --voices-dir /data/kokoro-voices/zh \
+  --voice zf_002
+```
+
+外部目录中放 `<voice>.bin` 或 `<voice>.npy`。`.pt` 需要先用仓库根目录的
+`scripts/import_kokoro_voices.py` 转换；脚本支持 `--source-dir` 从本地 `.pt`
+文件离线导入。单文件 `--voice-path FILE` 的优先级高于目录搜索。

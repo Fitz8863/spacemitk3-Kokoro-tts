@@ -1,0 +1,55 @@
+{
+  "source": "https://huggingface.co/hexgrad",
+  "format": "numpy float32, final dimension 256",
+  "languages": {
+    "en": {
+      "model": "hexgrad/Kokoro-82M",
+      "attempted": 2,
+      "count": 2,
+      "voices": [
+        {
+          "voice": "af_bella",
+          "path": "voices/en/af_bella.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "converted-local",
+          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+        },
+        {
+          "voice": "am_echo",
+          "path": "voices/en/am_echo.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "converted-local",
+          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+        }
+      ],
+      "failed": []
+    },
+    "zh": {
+      "model": "hexgrad/Kokoro-82M-v1.1-zh",
+      "attempted": 1,
+      "count": 1,
+      "voices": [
+        {
+          "voice": "zf_002",
+          "path": "voices/zh/zf_002.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "converted-local",
+          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+        }
+      ],
+      "failed": []
+    }
+  }
+}
