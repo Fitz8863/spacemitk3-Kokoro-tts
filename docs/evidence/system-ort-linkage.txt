@@ -1,0 +1,24 @@
+# system-installed SpaceMIT ORT linkage
+2026-08-25T19:50:49+08:00
+## CMake cache
+ONNXRUNTIME_INCLUDE_AUTO:PATH=/usr/local/include
+ONNXRUNTIME_INCLUDE_DIR:PATH=
+ONNXRUNTIME_LIB:STRING=
+ONNXRUNTIME_LIB_AUTO:FILEPATH=/usr/local/lib/libonnxruntime.so
+SPACEMIT_EP_LIB:FILEPATH=/usr/local/lib/libspacemit_ep.so
+SPACEMIT_ORT_INCLUDE_DIR:PATH=/usr/local/include
+SPACEMIT_ORT_ROOT:PATH=
+## ELF dynamic section
+ 0x0000000000000001 (NEEDED)             Shared library: [libonnxruntime.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libspacemit_ep.so.2]
+ 0x0000000000000001 (NEEDED)             Shared library: [libfftw3f.so.3]
+ 0x0000000000000001 (NEEDED)             Shared library: [libcurl.so.4]
+ 0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-riscv64-lp64d.so.1]
+ 0x000000000000001d (RUNPATH)            Library runpath: [/usr/local/lib:]
+## ldd
+	libonnxruntime.so.1 => /usr/local/lib/libonnxruntime.so.1 (0x0000003fa0c00000)
+	libspacemit_ep.so.2 => /usr/local/lib/libspacemit_ep.so.2 (0x0000003fa0400000)

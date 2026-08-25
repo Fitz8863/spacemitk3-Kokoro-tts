@@ -23,7 +23,7 @@
 | 英文模型/音色 | `kokoro-v1.0-en.q.onnx` / `af_heart` |
 | 中文模型/音色 | `kokoro-v1.1-zh.q.onnx` / `zf_001` |
 
-板端测试路径曾为 `/home/spacemit/projects/kokoro-tts`。现在运行脚本会根据脚本自身位置解析仓库根目录，不再强依赖这个克隆路径；SpaceMIT ORT 路径可通过 `SPACEMIT_ORT_ROOT` 覆盖。
+板端测试路径曾为 `/home/spacemit/projects/kokoro-tts`。运行脚本会根据脚本自身位置解析仓库根目录，不依赖固定的克隆路径。SpaceMIT ORT/EP 推荐安装到板端系统目录 `/usr/local`；`SPACEMIT_ORT_ROOT` 仅用于明确指定一个私有 Bundle。
 
 ## 2. 性能结果
 
@@ -70,8 +70,13 @@
 - [`docs/evidence/core2-en-a100.log`](docs/evidence/core2-en-a100.log)
 - [`docs/evidence/core2-en-a100-short.log`](docs/evidence/core2-en-a100-short.log)
 - [`docs/evidence/core2-zh-a100.log`](docs/evidence/core2-zh-a100.log)
+- [`docs/evidence/system-ort-interactive-short.log`](docs/evidence/system-ort-interactive-short.log)
+- [`docs/evidence/system-ort-linkage.txt`](docs/evidence/system-ort-linkage.txt)
+- [`docs/evidence/system-ort-cmake-reconfigure.log`](docs/evidence/system-ort-cmake-reconfigure.log)
 
 其中 `final-repo-*-a100.log` 是清理前完成的全新板端构建后的最终端到端复测日志；两次均生成了可播放的 24 kHz WAV，且运行退出后未留下独立的 `tts_file_demo` 进程。`core2-en-a100-short.log` 和 `core2-zh-a100.log` 是新增的部分 A100 核验证日志，包含 EP 初始化时打印的实际 affinity；`core2-en-a100.log` 另外记录了长文本压力测试。
+
+`system-ort-interactive-short.log` 是改为系统安装 ORT/EP 后的交互式复核：使用 `--cores 8,10`，两条短中文输入分别得到 RTF `0.467` 和 `0.446`，都覆盖写入同一个 WAV；`system-ort-linkage.txt` 记录了 CMake 命中 `/usr/local` 以及板端 `ldd` 的实际解析结果；`system-ort-cmake-reconfigure.log` 记录了清理旧缓存后重新配置和构建成功。
 
 参考 WAV：
 
@@ -176,18 +181,44 @@ sudo apt install -y \
 
 CMake 已加入 `.local-deps/usr/...` 的 FFTW 和 libcurl fallback；该目录是可再生构建依赖，不提交到 Git。
 
-还需要可用的 SpaceMIT ORT/EP 2.0.6。例如本次测试使用：
+还需要板端可用的 SpaceMIT ONNX Runtime/EP 2.0.6。推荐把已有 Bundle 安装到系统目录，而不是让仓库或运行脚本依赖某个用户的 home 路径。
+
+假设 Bundle 当前位于任意目录（下面只是本次板端测试使用的示例源路径）：
 
 ```text
-/home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6
+/home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6/
+├── include/onnxruntime_cxx_api.h
+├── include/spacemit_ort_env.h
+└── lib/libonnxruntime.so
+    libspacemit_ep.so
 ```
 
-其目录至少应包含：
+在板端从仓库根目录执行一次安装：
+
+```bash
+./scripts/install_spacemit_ort.sh \
+  /home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6
+```
+
+默认安装位置为：
 
 ```text
-include/onnxruntime_cxx_api.h
-lib/libonnxruntime.so
+/usr/local/include/
+/usr/local/lib/
+/etc/ld.so.conf.d/spacemit-ort.conf
 ```
+
+脚本在需要时自动调用 `sudo`，复制头文件和共享库，并运行 `ldconfig`。安装完成后可检查：
+
+```bash
+ldconfig -p | grep -E 'lib(onnxruntime|spacemit_ep)\.so'
+ls -l /usr/local/include/onnxruntime_cxx_api.h \
+      /usr/local/include/spacemit_ort_env.h \
+      /usr/local/lib/libonnxruntime.so \
+      /usr/local/lib/libspacemit_ep.so
+```
+
+如果没有 root 权限，也可以把 Bundle 保留在用户目录中，临时通过 `SPACEMIT_ORT_ROOT` 覆盖；这只是备用开发方式，不是仓库的默认依赖。
 
 ## 7. 构建
 
@@ -195,14 +226,28 @@ lib/libonnxruntime.so
 git clone git@github.com:Fitz8863/spacemitk3-Kokoro-tts.git
 cd spacemitk3-Kokoro-tts
 
-export SPACEMIT_ORT_ROOT=/home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6
-
+# 系统安装模式：不要设置 SPACEMIT_ORT_ROOT，CMake 自动搜索 /usr/local 和 /usr/lib。
+unset SPACEMIT_ORT_ROOT
 cmake -S spacemit/model-zoo-tts \
-  -B spacemit/model-zoo-tts/build-k3 \
-  -DONNXRUNTIME_INCLUDE_DIR="$SPACEMIT_ORT_ROOT/include" \
-  -DONNXRUNTIME_LIB="$SPACEMIT_ORT_ROOT/lib/libonnxruntime.so"
+  -B spacemit/model-zoo-tts/build-k3
 
 cmake --build spacemit/model-zoo-tts/build-k3 -j4
+```
+
+若该板端以前用旧命令配置过 `build-k3`，建议清理一次 CMake 缓存，避免旧的绝对路径缓存继续参与配置：
+
+```bash
+rm -rf spacemit/model-zoo-tts/build-k3
+cmake -S spacemit/model-zoo-tts -B spacemit/model-zoo-tts/build-k3
+cmake --build spacemit/model-zoo-tts/build-k3 -j4
+```
+
+也可以明确使用私有 Bundle（仅当确实需要时）：
+
+```bash
+cmake -S spacemit/model-zoo-tts \
+  -B spacemit/model-zoo-tts/build-k3 \
+  -DSPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6
 ```
 
 成功产物：
@@ -343,7 +388,9 @@ cd spacemit/case/model-zoo-k3
 run.sh <zh|en> <output.wav> --interactive [spacemit|cpu] [ep-cores]
 ```
 
-若 ORT 不在默认位置：
+运行脚本默认从 `/usr/local/lib`、`/usr/lib/riscv64-linux-gnu` 和 `/usr/lib` 加载系统安装的 ORT/EP，不需要设置任何用户目录变量。
+
+只有在使用私有 Bundle 时才设置覆盖：
 
 ```bash
 SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
@@ -401,7 +448,11 @@ SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对
 - `kokoro_zh_backend.cpp`
   - 中文图中的 6 个 rank-3 Resize 和 generator 输出节点进入 CPU fallback。
 - `CMakeLists.txt`
+  - 默认从 `/usr/local`、`/usr/include` 和系统库目录查找 ORT/EP；
+  - 支持 `-DSPACEMIT_ORT_ROOT=...` 或环境变量作为私有 Bundle 覆盖；
   - 支持从 `.local-deps` 查找 FFTW/libcurl，方便无 root 的板端构建。
+- `scripts/install_spacemit_ort.sh`
+  - 将 SpaceMIT ORT/EP Bundle 安装到 `/usr/local`，并注册动态链接器搜索路径。
 - `run_a100.sh`
   - 支持 `--cores 8,10`、`--cores 8-11` 等具体核列表；
   - 根据所选核数自动设置 EP worker 数，并检查手工设置的线程数是否匹配；

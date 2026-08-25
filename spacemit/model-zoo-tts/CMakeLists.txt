@@ -90,24 +90,89 @@ target_include_directories(tts
 
 set(ONNXRUNTIME_INCLUDE_DIR "" CACHE PATH "ONNX Runtime include directory")
 set(ONNXRUNTIME_LIB "" CACHE STRING "ONNX Runtime libraries (semicolon-separated)")
+set(SPACEMIT_ORT_ROOT "" CACHE PATH
+    "Optional SpaceMIT ORT bundle root; otherwise search system paths")
 
-if(ONNXRUNTIME_INCLUDE_DIR AND ONNXRUNTIME_LIB)
-    # 使用用户指定的路径
+# Allow the existing deployment environment variable to select a non-system
+# bundle, but do not make that developer-specific path a build or runtime
+# requirement.  The preferred deployment is /usr/local (see
+# scripts/install_spacemit_ort.sh), in which case this remains empty.
+if(NOT SPACEMIT_ORT_ROOT AND DEFINED ENV{SPACEMIT_ORT_ROOT})
+    set(SPACEMIT_ORT_ROOT "$ENV{SPACEMIT_ORT_ROOT}" CACHE PATH
+        "Optional SpaceMIT ORT bundle root; otherwise search system paths" FORCE)
+endif()
+
+set(_SPACEMIT_ORT_INCLUDE_HINTS)
+set(_SPACEMIT_ORT_LIBRARY_HINTS)
+if(SPACEMIT_ORT_ROOT)
+    list(APPEND _SPACEMIT_ORT_INCLUDE_HINTS "${SPACEMIT_ORT_ROOT}/include")
+    list(APPEND _SPACEMIT_ORT_LIBRARY_HINTS "${SPACEMIT_ORT_ROOT}/lib")
+    list(PREPEND CMAKE_PREFIX_PATH "${SPACEMIT_ORT_ROOT}")
+endif()
+
+set(_SPACEMIT_SYSTEM_INCLUDE_DIRS /usr/local/include /usr/include)
+set(_SPACEMIT_SYSTEM_LIBRARY_DIRS /usr/local/lib /usr/lib)
+if(CMAKE_LIBRARY_ARCHITECTURE)
+    list(APPEND _SPACEMIT_SYSTEM_LIBRARY_DIRS
+        "/usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}")
+endif()
+
+set(_SPACEMIT_USER_ORT_VALID TRUE)
+if(ONNXRUNTIME_INCLUDE_DIR AND NOT EXISTS
+        "${ONNXRUNTIME_INCLUDE_DIR}/onnxruntime_cxx_api.h")
+    set(_SPACEMIT_USER_ORT_VALID FALSE)
+endif()
+if(ONNXRUNTIME_LIB)
+    foreach(_spacemit_ort_lib IN LISTS ONNXRUNTIME_LIB)
+        if(IS_ABSOLUTE "${_spacemit_ort_lib}" AND NOT EXISTS
+                "${_spacemit_ort_lib}")
+            set(_SPACEMIT_USER_ORT_VALID FALSE)
+        endif()
+    endforeach()
+endif()
+
+if(ONNXRUNTIME_INCLUDE_DIR AND ONNXRUNTIME_LIB AND _SPACEMIT_USER_ORT_VALID)
+    # 使用用户指定的有效路径。
     message(STATUS "[tts] Using user-specified ONNX Runtime:")
     message(STATUS "  Include: ${ONNXRUNTIME_INCLUDE_DIR}")
     message(STATUS "  Lib: ${ONNXRUNTIME_LIB}")
     target_include_directories(tts PUBLIC ${ONNXRUNTIME_INCLUDE_DIR})
     target_link_libraries(tts PUBLIC ${ONNXRUNTIME_LIB})
 else()
+    if(ONNXRUNTIME_INCLUDE_DIR OR ONNXRUNTIME_LIB)
+        message(WARNING
+            "[tts] Ignoring incomplete or invalid ONNX Runtime override; "
+            "falling back to system/bundle search")
+        # Do not leave stale absolute paths such as /include or /lib in the
+        # cache after recovering from an earlier broken configure.
+        set(ONNXRUNTIME_INCLUDE_DIR "" CACHE PATH
+            "ONNX Runtime include directory" FORCE)
+        set(ONNXRUNTIME_LIB "" CACHE STRING
+            "ONNX Runtime libraries (semicolon-separated)" FORCE)
+    endif()
+    # These are cache variables. Clear old results so installing the runtime
+    # to /usr/local after an earlier configure is picked up on reconfigure.
+    unset(ONNXRUNTIME_LIB_AUTO CACHE)
+    unset(ONNXRUNTIME_INCLUDE_AUTO CACHE)
     # 先尝试直接查找（避免损坏的 CMake 配置文件问题）
     if(APPLE)
         # macOS Homebrew
-        find_library(ONNXRUNTIME_LIB_AUTO onnxruntime HINTS /opt/homebrew/lib /usr/local/lib)
-        find_path(ONNXRUNTIME_INCLUDE_AUTO onnxruntime_cxx_api.h HINTS /opt/homebrew/include /usr/local/include)
+        find_library(ONNXRUNTIME_LIB_AUTO onnxruntime
+            HINTS ${_SPACEMIT_ORT_LIBRARY_HINTS} /opt/homebrew/lib
+            PATHS ${_SPACEMIT_SYSTEM_LIBRARY_DIRS})
+        find_path(ONNXRUNTIME_INCLUDE_AUTO onnxruntime_cxx_api.h
+            HINTS ${_SPACEMIT_ORT_INCLUDE_HINTS} /opt/homebrew/include
+            PATHS ${_SPACEMIT_SYSTEM_INCLUDE_DIRS}
+            PATH_SUFFIXES onnxruntime)
     else()
-        # Linux 默认路径
-        find_library(ONNXRUNTIME_LIB_AUTO onnxruntime HINTS /usr/lib /usr/local/lib /usr/lib/x86_64-linux-gnu)
-        find_path(ONNXRUNTIME_INCLUDE_AUTO onnxruntime_cxx_api.h HINTS /usr/include /usr/local/include /usr/include/onnxruntime)
+        # Linux: prefer an explicitly selected bundle, then system locations.
+        find_library(ONNXRUNTIME_LIB_AUTO onnxruntime
+            HINTS ${_SPACEMIT_ORT_LIBRARY_HINTS}
+            PATHS ${_SPACEMIT_SYSTEM_LIBRARY_DIRS})
+        find_path(ONNXRUNTIME_INCLUDE_AUTO onnxruntime_cxx_api.h
+            HINTS ${_SPACEMIT_ORT_INCLUDE_HINTS}
+            PATHS ${_SPACEMIT_SYSTEM_INCLUDE_DIRS}
+            PATH_SUFFIXES onnxruntime)
     endif()
 
     if(ONNXRUNTIME_LIB_AUTO AND ONNXRUNTIME_INCLUDE_AUTO)
@@ -132,14 +197,18 @@ endif()
 
 option(USE_SPACEMIT_EP "Enable SpaceMIT Execution Provider for TTS when requested at runtime" ON)
 if(USE_SPACEMIT_EP)
+    unset(SPACEMIT_ORT_INCLUDE_DIR CACHE)
+    unset(SPACEMIT_EP_LIB CACHE)
     find_path(SPACEMIT_ORT_INCLUDE_DIR
         NAMES spacemit_ort_env.h
-        PATHS ${ONNXRUNTIME_INCLUDE_DIR} /usr/include /usr/local/include
+        HINTS ${ONNXRUNTIME_INCLUDE_DIR} ${_SPACEMIT_ORT_INCLUDE_HINTS}
+        PATHS ${_SPACEMIT_SYSTEM_INCLUDE_DIRS}
         PATH_SUFFIXES onnxruntime
     )
     find_library(SPACEMIT_EP_LIB
         NAMES spacemit_ep
-        PATHS /usr/local/lib /usr/lib
+        HINTS ${_SPACEMIT_ORT_LIBRARY_HINTS}
+        PATHS ${_SPACEMIT_SYSTEM_LIBRARY_DIRS}
     )
     if(SPACEMIT_ORT_INCLUDE_DIR AND SPACEMIT_EP_LIB)
         target_compile_definitions(tts PRIVATE USE_SPACEMIT_EP)

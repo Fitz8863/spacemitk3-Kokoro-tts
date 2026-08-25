@@ -51,7 +51,9 @@ esac
 
 repo_root=$(cd -- "$script_dir/../../.." && pwd)
 tts_root="$repo_root/spacemit/model-zoo-tts"
-ort_root="${SPACEMIT_ORT_ROOT:-/home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6}"
+# Prefer system-installed SpaceMIT ORT (/usr/local or /usr/lib). Set
+# SPACEMIT_ORT_ROOT only when intentionally using an unpacked private bundle.
+ort_root="${SPACEMIT_ORT_ROOT:-}"
 case_home="$tts_root/.case-home"
 model_cache="$case_home/.cache/models/tts/kokoro-tts"
 mkdir -p "$model_cache"
@@ -64,7 +66,11 @@ if [[ -f "$repo_root/official-model-zoo/v1.1-zh/kokoro-v1.1-zh.q.onnx" ]]; then
   ln -sfn "$repo_root/official-model-zoo/v1.1-zh" "$model_cache/kokoro-v1.1-zh"
 fi
 export HOME="$case_home"
-export LD_LIBRARY_PATH="$ort_root/lib:/usr/lib/riscv64-linux-gnu:${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH}"
+if [[ -n "$ort_root" ]]; then
+  export LD_LIBRARY_PATH="$ort_root/lib:/usr/lib/riscv64-linux-gnu:/usr/local/lib:${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH}"
+else
+  export LD_LIBRARY_PATH="/usr/local/lib:/usr/lib/riscv64-linux-gnu:/usr/lib:${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH}"
+fi
 export SPACEMIT_TTS_WARMUP_RUNS="${SPACEMIT_TTS_WARMUP_RUNS:-1}"
 if [[ "$provider" == spacemit ]]; then
   if [[ -z "$ep_cores" ]]; then
@@ -93,10 +99,21 @@ if [[ ! -x "$demo" ]]; then
   cat >&2 <<EOF
 错误：找不到可执行文件：$demo
 请先在板端编译 TTS demo：
+EOF
+  if [[ -n "$ort_root" ]]; then
+    cat >&2 <<EOF
   cmake -S "$tts_root" -B "$tts_root/build-k3" \
-    -DONNXRUNTIME_INCLUDE_DIR="$ort_root/include" \
-    -DONNXRUNTIME_LIB="$ort_root/lib/libonnxruntime.so"
+    -DSPACEMIT_ORT_ROOT="$ort_root"
+EOF
+  else
+    cat >&2 <<EOF
+  cmake -S "$tts_root" -B "$tts_root/build-k3"
+EOF
+  fi
+  cat >&2 <<EOF
   cmake --build "$tts_root/build-k3" -j4
+
+系统安装模式不要设置 SPACEMIT_ORT_ROOT，CMake 会从 /usr/local 和 /usr/lib 自动查找。
 EOF
   exit 127
 fi

@@ -1,0 +1,51 @@
+-- No CMAKE_BUILD_TYPE given, default to Release
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /usr/local
+-- BUILD_SHARED_LIBS OFF
+-- C++ Standard version: 17
+-- CMAKE_CXX_FLAGS:
+-- Downloading openfst from /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/build-k3/openfst-sherpa-onnx-2024-06-13.tar.gz
+CMake Warning (dev) at /usr/share/cmake-4.2/Modules/FetchContent.cmake:1963 (message):
+  Calling FetchContent_Populate(openfst) is deprecated, call
+  FetchContent_MakeAvailable(openfst) instead.  Policy CMP0169 can be set to
+  OLD to allow FetchContent_Populate(openfst) to be called directly for now,
+  but the ability to call it with declared details will be removed completely
+  in a future version.
+Call Stack (most recent call first):
+  /home/spacemit/.cache/thirdparty/kaldifst/cmake/openfst.cmake:67 (FetchContent_Populate)
+  /home/spacemit/.cache/thirdparty/kaldifst/cmake/openfst.cmake:95 (download_openfst)
+  /home/spacemit/.cache/thirdparty/kaldifst/CMakeLists.txt:94 (include)
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- openfst is downloaded to /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/build-k3/_deps/openfst-src
+-- Failed to find all ICU components (missing: ICU_INCLUDE_DIR ICU_LIBRARY data i18n io test tu uc)
+CMake Deprecation Warning at build-k3/_deps/openfst-src/CMakeLists.txt:15 (cmake_minimum_required):
+  Compatibility with CMake < 3.10 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value.  Or, use the <min>...<max> syntax
+  to tell CMake that the project requires at least <min> but has been updated
+  to work with policies introduced by <max> or earlier.
+
+
+CMake Warning at CMakeLists.txt:143 (message):
+  [tts] Ignoring incomplete or invalid ONNX Runtime override; falling back to
+  system/bundle search
+
+
+-- [tts] Found ONNX Runtime via direct search:
+--   Include: /usr/local/include
+--   Lib: /usr/local/lib/libonnxruntime.so
+-- [tts] SpaceMIT EP enabled: /usr/local/include, lib: /usr/local/lib/libspacemit_ep.so
+-- [tts] tts_stream_demo disabled (BUILD_STREAM_DEMO=OFF)
+-- [tts] Python found: /usr/bin/python3 (3.14.4)
+-- [tts] Python bindings disabled (pybind11 not found)
+--   Install pybind11: pip install pybind11
+-- Configuring done (0.8s)
+-- Generating done (0.1s)
+-- Build files have been written to: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/build-k3
+[ 16%] Built target fst
+[ 35%] Built target kaldifst_core
+[ 96%] Built target tts
+[100%] Built target tts_file_demo

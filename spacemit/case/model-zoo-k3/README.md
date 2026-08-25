@@ -81,7 +81,15 @@ SPACEMIT_TTS_EP_CORES=8,11 ./run_a100.sh zh output.wav '这是一个语音合成
 ../../../scripts/download_models.sh
 ```
 
-若 ORT 不在默认路径：
+默认情况下脚本从板端系统目录 `/usr/local/lib`、`/usr/lib/riscv64-linux-gnu` 和 `/usr/lib` 加载 ORT/EP，不依赖某个用户的 home 路径。
+
+如果系统尚未安装 SpaceMIT ORT/EP，可在仓库根目录执行：
+
+```bash
+../../../scripts/install_spacemit_ort.sh /path/to/spacemit-ort.riscv64.2.0.6
+```
+
+只有需要使用私有 Bundle 时才设置覆盖：
 
 ```bash
 SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
