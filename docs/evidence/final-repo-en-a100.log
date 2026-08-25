@@ -1,0 +1,38 @@
+初始化 TTS 引擎 (kokoro:en)...
+[Kokoro] All required files for en are ready in /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.0-en
+[KokoroVoiceManager] Loaded voice: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.0-en/voices/af_heart.bin (510 style vectors)
+[Kokoro] SpaceMIT EP initialized (ep_threads=8)
+[Kokoro] Provider: spacemit
+[0;93m2026-08-25 17:42:55.685614282 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.686089882 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.686152170 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.686242582 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.688605162 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.691975521 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.703553559 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 17:42:55.703967911 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/istft/stft/ConvTranspose [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 17:42:55.838232584 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.839308484 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.841782100 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.842272073 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.842340986 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.842450022 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 17:42:55.856198693 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 17:42:55.856631128 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/istft/stft/ConvTranspose [ConvTranspose] has been disabled.[m
+[KokoroPhonemizer] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] cpp-pinyin initialized successfully.
+[KokoroPhonemizer] espeak-ng detected, English support enabled.
+[KokoroPhonemizer] English lexicon: gold=90201 silver=93361
+[Kokoro] Warming up model...
+[Kokoro] Model warmed up in 4794ms (1 runs, 66 tokens)
+[Kokoro] Backend initialized successfully (kokoro-en)
+引擎: Kokoro-TTS (kokoro-en)
+采样率: 24000 Hz
+说话人数: 1
+
+合成中: "This is a spacemit k3 kokoro performance test."
+采样率: 24000 Hz
+时长: 3625 ms
+处理时间: 1238 ms
+RTF: 0.341517
+已保存: final-repo-en.wav

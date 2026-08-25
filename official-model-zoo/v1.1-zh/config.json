@@ -1,0 +1,11 @@
+{
+    "model_type": "styletts2",
+    "version": "1.1-zh",
+    "max_seq_len": 510,
+    "seq": [
+        0,
+        -1,
+        0
+    ],
+    "sample_rate": 24000
+}

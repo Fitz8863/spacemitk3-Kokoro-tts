@@ -1,0 +1,38 @@
+# Build and local runtime state
+build/
+build-*/
+**/build/
+**/build-*/
+.case-home/
+**/.case-home/
+.local-deps/
+**/.local-deps/
+.cache/
+**/.cache/
+
+# Python/C++ generated files
+__pycache__/
+*.py[cod]
+*.o
+*.so
+*.a
+*.pdb
+*.d
+
+# Generated audio and profiling artifacts (checked-in examples are allow-listed below)
+*.wav
+*.jsonl
+*profile*.json
+*SpineSubgraph*.onnx
+
+# Archives and local package downloads
+*.tar.gz
+*.tar.bz2
+*.deb
+
+# Keep the two verified reference WAVs in the repository.
+!examples/audio/
+!examples/audio/*.wav
+
+# The verified English Kokoro ONNX is below GitHub's 100 MB hard limit.
+!official-model-zoo/v1.0-en/kokoro-v1.0-en.q.onnx
