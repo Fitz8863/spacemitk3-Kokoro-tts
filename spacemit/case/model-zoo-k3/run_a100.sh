@@ -7,18 +7,34 @@ source "$script_dir/affinity.sh"
 
 if [[ $# -lt 3 ]]; then
   echo "Usage: $0 <zh|en> <output.wav> <text> [repeat] [--cores CORE_LIST]" >&2
+  echo "       $0 <zh|en> <output.wav> --interactive [--cores CORE_LIST]" >&2
   echo "  CORE_LIST: comma/range list, e.g. 8,10,12 or 8-15" >&2
   exit 2
 fi
 
 lang="$1"
 out="$2"
-text="$3"
-shift 3
+interactive=false
+if [[ "$3" == "--interactive" ]]; then
+  interactive=true
+  shift 3
+else
+  text="$3"
+  shift 3
+fi
+
 repeat=1
 cores="${SPACEMIT_TTS_EP_CORES:-${SPACEMIT_TTS_EP_AFFINITY:-8-15}}"
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --interactive)
+      if "$interactive"; then
+        echo "duplicate --interactive" >&2
+        exit 2
+      fi
+      interactive=true
+      shift
+      ;;
     --cores|--ep-cores)
       if [[ $# -lt 2 ]]; then
         echo "$1 requires a core list" >&2
@@ -31,12 +47,12 @@ while [[ $# -gt 0 ]]; do
       cores="${1#*=}"
       shift
       ;;
-    '' )
+    '')
       echo "unexpected empty argument" >&2
       exit 2
       ;;
     *)
-      if [[ "$1" =~ ^[1-9][0-9]*$ && "$repeat" == 1 ]]; then
+      if [[ "$interactive" == false && "$1" =~ ^[1-9][0-9]*$ && "$repeat" == 1 ]]; then
         repeat="$1"
         shift
       else
@@ -62,4 +78,8 @@ export SPACEMIT_TTS_EP_AFFINITY="$ep_affinity"
 # the same already-compiled EP shapes as subsequent requests.
 export SPACEMIT_TTS_WARMUP_RUNS="${SPACEMIT_TTS_WARMUP_RUNS:-1}"
 
-exec "$script_dir/run.sh" "$lang" "$out" "$text" spacemit "$ep_affinity" "$repeat"
+if "$interactive"; then
+  exec "$script_dir/run.sh" "$lang" "$out" --interactive spacemit "$ep_affinity"
+else
+  exec "$script_dir/run.sh" "$lang" "$out" "$text" spacemit "$ep_affinity" "$repeat"
+fi

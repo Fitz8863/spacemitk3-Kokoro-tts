@@ -20,6 +20,20 @@ cd spacemit/case/model-zoo-k3
   'This is a spacemit k3 kokoro performance test.'
 ```
 
+## 交互式常驻模式
+
+程序启动后可以连续输入文本，每行按 Enter 触发一次合成。引擎只初始化一次，后续结果始终覆盖同一个 WAV 文件：
+
+```bash
+# 默认使用 A100 8-15
+./run_a100.sh zh interactive.wav --interactive
+
+# 只绑定 A100 核 8 和 10
+./run_a100.sh zh interactive.wav --interactive --cores 8,10
+```
+
+输入 `q`、`quit` 或 `exit` 退出；空行忽略，Ctrl-D 也可退出。交互模式适合单路请求，合成当前文本期间不会并行处理下一条输入。
+
 稳态性能测试：
 
 ```bash

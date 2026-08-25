@@ -5,17 +5,35 @@ script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 # shellcheck source=affinity.sh
 source "$script_dir/affinity.sh"
 
-if [[ $# -lt 3 || $# -gt 6 ]]; then
-  echo "Usage: $0 <zh|en> <output.wav> <text> [spacemit|cpu] [ep-cores] [repeat]" >&2
-  echo "  ep-cores: comma/range list, e.g. 8,10,12 or 8-15" >&2
-  exit 2
+interactive=false
+if [[ $# -ge 3 && "$3" == "--interactive" ]]; then
+  interactive=true
+  lang="$1"
+  out="$2"
+  shift 3
+  provider="${1:-spacemit}"
+  ep_cores="${2:-}"
+  repeat="${3:-1}"
+  if [[ $# -gt 3 ]]; then
+    echo "too many arguments for interactive mode" >&2
+    echo "Usage: $0 <zh|en> <output.wav> --interactive [spacemit|cpu] [ep-cores]" >&2
+    exit 2
+  fi
+else
+  if [[ $# -lt 3 || $# -gt 6 ]]; then
+    echo "Usage: $0 <zh|en> <output.wav> <text> [spacemit|cpu] [ep-cores] [repeat]" >&2
+    echo "  interactive: $0 <zh|en> <output.wav> --interactive [spacemit|cpu] [ep-cores]" >&2
+    echo "  ep-cores: comma/range list, e.g. 8,10,12 or 8-15" >&2
+    exit 2
+  fi
+  lang="$1"
+  out="$2"
+  text="$3"
+  provider="${4:-spacemit}"
+  ep_cores="${5:-}"
+  repeat="${6:-1}"
 fi
-lang="$1"
-out="$2"
-text="$3"
-provider="${4:-spacemit}"
-ep_cores="${5:-}"
-repeat="${6:-1}"
+
 if ! [[ "$repeat" =~ ^[1-9][0-9]*$ ]]; then
   echo "repeat must be a positive integer" >&2
   exit 2
@@ -70,5 +88,10 @@ if [[ "$provider" == spacemit ]] && command -v spacemit-tcm-smi >/dev/null 2>&1;
   spacemit-tcm-smi -c >/dev/null 2>&1 || true
 fi
 
-exec "$tts_root/build-k3/bin/tts_file_demo" \
-  -p "$text" -l "$engine" --provider "$provider" --voice "$voice" -o "$out" --repeat "$repeat"
+if "$interactive"; then
+  exec "$tts_root/build-k3/bin/tts_file_demo" \
+    -l "$engine" --provider "$provider" --voice "$voice" -o "$out"
+else
+  exec "$tts_root/build-k3/bin/tts_file_demo" \
+    -p "$text" -l "$engine" --provider "$provider" --voice "$voice" -o "$out" --repeat "$repeat"
+fi

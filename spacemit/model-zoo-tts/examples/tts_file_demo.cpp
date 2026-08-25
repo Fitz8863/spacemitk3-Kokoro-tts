@@ -417,7 +417,6 @@ int main(int argc, char* argv[]) {
         std::cout << "----------------------------------------" << std::endl;
 
         std::string line;
-        int count = 0;
 
         while (true) {
             std::cout << "> ";
@@ -435,20 +434,10 @@ int main(int argc, char* argv[]) {
                 break;
             }
 
-            // 生成输出文件名
-            std::string out = output_file;
-            if (count > 0) {
-                size_t dot = out.rfind('.');
-                if (dot != std::string::npos) {
-                    out = out.substr(0, dot) + "_" + std::to_string(count) + out.substr(dot);
-                } else {
-                    out = out + "_" + std::to_string(count);
-                }
-            }
-
-            synthesize(engine, line, out);
+            // 交互模式固定写入同一个文件；SaveToFile 会覆盖上一次结果。
+            // 这样调用方可以持续监听 output_file，而不需要处理递增文件名。
+            synthesize(engine, line, output_file);
             std::cout << std::endl;
-            count++;
         }
     } else {
         // 直接模式

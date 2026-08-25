@@ -292,6 +292,55 @@ CPU 对照示例：
 ./run.sh zh kokoro-zh-cpu.wav '这是一个语音合成测试' cpu
 ```
 
+### 8.1 交互式常驻合成
+
+当前 K3 入口支持交互式模式：程序只初始化一次 Kokoro 引擎并保持进程常驻，之后每输入一行文本并按 Enter 就生成一次 WAV。所有请求写入同一个输出路径，因此后一次成功合成会覆盖前一次文件，不会生成 `output_1.wav`、`output_2.wav` 等递增文件。
+
+```bash
+cd spacemit/case/model-zoo-k3
+
+# 默认使用 A100 8-15；启动后逐行输入文本
+./run_a100.sh zh interactive.wav --interactive
+
+# 只使用指定的 A100 核，例如 8 和 10
+./run_a100.sh zh interactive.wav --interactive --cores 8,10
+```
+
+运行时示例：
+
+```text
+初始化 TTS 引擎 (kokoro:zh)...
+进入交互模式，输入文本后按 Enter 合成 (输入 q 退出)
+> 第一条文本
+合成中: "第一条文本"
+已保存: interactive.wav
+> 第二条文本
+合成中: "第二条文本"
+已保存: interactive.wav
+> q
+再见!
+```
+
+说明：
+
+- 空行会被忽略；输入 `q`、`quit` 或 `exit` 退出，Ctrl-D 也可以结束 stdin。
+- `interactive.wav` 必须由调用方提前确定；每次成功合成都覆盖该文件。
+- 引擎、模型和 SpaceMIT EP 只初始化一次，适合连续输入，避免每条文本重复承担约 4--5 秒启动/warmup 开销。
+- 合成期间程序会同步处理当前文本；下一行应在当前请求完成后输入，适合单路交互，不是并发队列服务。
+- 交互模式同样支持 `--cores`，例如 `--cores 8,10` 或 `--cores 8-11`。
+
+通用入口也支持同样模式：
+
+```bash
+./run.sh zh interactive.wav --interactive spacemit '8;10'
+```
+
+其中通用入口的交互式参数顺序是：
+
+```text
+run.sh <zh|en> <output.wav> --interactive [spacemit|cpu] [ep-cores]
+```
+
 若 ORT 不在默认位置：
 
 ```bash
