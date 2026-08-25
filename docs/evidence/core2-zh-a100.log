@@ -1,0 +1,77 @@
+初始化 TTS 引擎 (kokoro:zh)...
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/kokoro-v1.1-zh.q.onnx
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/tokenizer.json
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/config.json
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/voices/zf_001.npy
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/us_gold.json
+[Kokoro] Missing or incomplete required file: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/us_silver.json
+[Kokoro] Downloading zh model from https://archive.spacemit.com/spacemit-ai/model_zoo/tts/kokoro/kokoro-v1.1-zh.tar.gz ...
+
+[Kokoro] Extracting kokoro-v1.1-zh.tar.gz ...
+[Kokoro] zh model downloaded and extracted successfully!
+[Kokoro] All required files for zh are ready in /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh
+[KokoroVoiceManager] Loaded voice: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/voices/zf_001.npy (510 style vectors)
+[Kokoro] SpaceMIT EP initialized (ep_threads=2, affinity=8;10)
+[Kokoro] Provider: spacemit
+[0;93m2026-08-25 18:05:05.196683574 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.197209963 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.197550654 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.197652274 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.197888595 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv_1 [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.197920427 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.200275473 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.204266186 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.215553817 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.215802930 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose_1 [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 18:05:05.215957838 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 18:05:05.380310019 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.381494542 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.383712887 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.384369229 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.384811414 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.384934533 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 18:05:05.385275516 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv_1 [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.385303264 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.395879265 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 18:05:05.396177250 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose_1 [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 18:05:05.396343658 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/generator/ConvTranspose [ConvTranspose] has been disabled.[m
+[KokoroZh] Loaded 172 tokenizer entries from /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.1-zh/tokenizer.json
+Cloning https://gitee.com/spacemit-robotics/cppjieba.git to /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cppjieba...
+Cloning into '/home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cppjieba'...
+Submodule 'deps/limonp' (https://github.com/yanyiwu/limonp.git) registered for path 'deps/limonp'
+Cloning into '/home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cppjieba/deps/limonp'...
+Submodule path 'deps/limonp': checked out '5c82a3f17e4e0adc6a5decfe245054b0ed533d1a'
+cppjieba cloned successfully!
+[KokoroZh] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] cpp-pinyin initialized successfully.
+[KokoroPhonemizer] espeak-ng detected, English support enabled.
+[KokoroPhonemizer] English lexicon: gold=90201 silver=93361
+[Kokoro] Warming up model...
+[TextNormFiles] Downloading https://archive.spacemit.com/spacemit-ai/model_zoo/tts/text_norm/v1/zh/date.fst ...
+
+Download completed!
+[TextNormFiles] Downloading https://archive.spacemit.com/spacemit-ai/model_zoo/tts/text_norm/v1/zh/phone.fst ...
+
+Download completed!
+[TextNormFiles] Downloading https://archive.spacemit.com/spacemit-ai/model_zoo/tts/text_norm/v1/zh/number.fst ...
+
+Download completed!
+[Kokoro] Model warmed up in 6015ms (1 runs, 63 tokens)
+[Kokoro] Backend initialized successfully (kokoro-zh)
+引擎: Kokoro-TTS (kokoro-zh)
+采样率: 24000 Hz
+说话人数: 1
+
+合成中: "这是一个语音合成测试"
+采样率: 24000 Hz
+时长: 3025 ms
+处理时间: 1509 ms
+RTF: 0.498843
+已保存: core2-zh.wav
+---AFFINITY---
+pid=2291659
+Name:	tts_file_demo
+Pid:	2291659
+Cpus_allowed_list:	0-7
+core2-zh.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 24000 Hz

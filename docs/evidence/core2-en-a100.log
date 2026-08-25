@@ -1,0 +1,58 @@
+初始化 TTS 引擎 (kokoro:en)...
+[Kokoro] All required files for en are ready in /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.0-en
+[KokoroVoiceManager] Loaded voice: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/models/tts/kokoro-tts/kokoro-v1.0-en/voices/af_heart.bin (510 style vectors)
+[Kokoro] SpaceMIT EP initialized (ep_threads=2)
+[Kokoro] Provider: spacemit
+[0;93m2026-08-25 17:59:54.856188013 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.856664864 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.856749776 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.856840022 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.859103618 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.862487033 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:54.873998670 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 17:59:54.874440815 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/istft/stft/ConvTranspose [ConvTranspose] has been disabled.[m
+[0;93m2026-08-25 17:59:55.007742154 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/F0.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.008858224 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /encoder/N.1/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.011287978 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/decode.3/upsample/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.011762704 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/f0_upsamp/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.011832618 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.011936946 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/m_source/l_sin_gen/Resize_1 [Resize] has been disabled.[m
+[0;93m2026-08-25 17:59:55.025407943 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/conv_post/Conv [Conv] has been disabled.[m
+[0;93m2026-08-25 17:59:55.025868171 [W:onnxruntime:KokoroBackend, compiler_depend.ts:330 IsNodeSupported] operator /decoder/decoder/generator/istft/stft/ConvTranspose [ConvTranspose] has been disabled.[m
+Cloning https://gitee.com/spacemit-robotics/cpp-pinyin.git to /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin...
+Cloning into '/home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin'...
+Repository cloned successfully!
+[KokoroPhonemizer] Using cpp-pinyin dictionary at: /home/spacemit/projects/kokoro-tts/spacemit/model-zoo-tts/.case-home/.cache/thirdparty/cpp-pinyin/res/dict
+[KokoroPhonemizer] cpp-pinyin initialized successfully.
+[KokoroPhonemizer] espeak-ng detected, English support enabled.
+[KokoroPhonemizer] English lexicon: gold=90201 silver=93361
+[Kokoro] Warming up model...
+[Kokoro] Model warmed up in 7131ms (1 runs, 66 tokens)
+[Kokoro] Backend initialized successfully (kokoro-en)
+引擎: Kokoro-TTS (kokoro-en)
+采样率: 24000 Hz
+说话人数: 1
+
+合成中: "This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test."
+[Kokoro] Splitting long input: 2764 effective tokens, 70 sentence/model-safe chunks [64, 14, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15, 64, 15]
+采样率: 24000 Hz
+时长: 162460 ms
+处理时间: 157370 ms
+RTF: 0.968669
+已保存: core2-en.wav
+---AFFINITY---
+pid=2283645
+Name:	tts_file_demo
+Pid:	2283645
+Cpus_allowed_list:	0-7
+Name:	tts_file_demo
+Pid:	2283662
+Cpus_allowed_list:	0-7
+Name:	tts_file_demo
+Pid:	2283668
+Cpus_allowed_list:	8
+Name:	tts_file_demo
+Pid:	2283669
+Cpus_allowed_list:	10
+core2-en.wav: RIFF (little-endian) data, WAVE audio, Microsoft PCM, 16 bit, mono 24000 Hz
+2283640 bash -c set -euo pipefail; cd /home/spacemit/projects/kokoro-tts/spacemit/case/model-zoo-k3; rm -f core2-en.wav core2-en.log core2-affinity.txt core2-done; (timeout 180s ./run_a100.sh en core2-en.wav "This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test. This is a SpaceMIT K3 Kokoro A100 core binding test." --cores 8,10 >core2-en.log 2>&1; echo $? >core2-done) & bg=$!; for i in $(seq 1 120); do if [[ -f core2-done ]]; then break; fi; pid=$(pgrep -n tts_file_demo || true); if [[ -n "$pid" ]]; then { echo "pid=$pid"; for status in /proc/$pid/task/*/status; do awk '/^Name:|^Pid:|^Cpus_allowed_list:/' "$status"; done; } >core2-affinity.txt; fi; sleep 0.25; done; wait $bg; cat core2-en.log; echo ---AFFINITY---; cat core2-affinity.txt; file core2-en.wav; pgrep -af tts_file_demo || true

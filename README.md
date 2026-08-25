@@ -58,7 +58,7 @@
 | ZH | 4 | `8;9;10;11` | 893.5 ms | 0.295 |
 | ZH | 8 | `8;9;10;11;12;13;14;15` | **774 ms** | **0.256** |
 
-最终选择 8 个 EP worker。测试时检查 `/proc/<pid>/task/*/status`，观察到 8 个 EP worker 的 `Cpus_allowed_list` 分别为 `8`、`9`、`10`、`11`、`12`、`13`、`14`、`15`；应用和 CPU fallback 线程仍为 `0-7`。这证明 A100 亲和性实际生效，而不只是设置了环境变量。
+最终默认选择 8 个 EP worker。测试时检查 `/proc/<pid>/task/*/status`，观察到 8 个 EP worker 的 `Cpus_allowed_list` 分别为 `8`、`9`、`10`、`11`、`12`、`13`、`14`、`15`；应用和 CPU fallback 线程仍为 `0-7`。这证明 A100 亲和性实际生效，而不只是设置了环境变量。新增的 2 核验证使用 `--cores 8,10`，启动日志明确显示 `ep_threads=2, affinity=8;10`；长英文文本 RTF 为 `0.969`，中文短文本 RTF 为 `0.499`，两者仍然低于 1。
 
 原始最终日志保留在：
 
@@ -67,8 +67,11 @@
 - [`docs/evidence/en-a100-smoke.log`](docs/evidence/en-a100-smoke.log)
 - [`docs/evidence/final-repo-en-a100.log`](docs/evidence/final-repo-en-a100.log)
 - [`docs/evidence/final-repo-zh-a100.log`](docs/evidence/final-repo-zh-a100.log)
+- [`docs/evidence/core2-en-a100.log`](docs/evidence/core2-en-a100.log)
+- [`docs/evidence/core2-en-a100-short.log`](docs/evidence/core2-en-a100-short.log)
+- [`docs/evidence/core2-zh-a100.log`](docs/evidence/core2-zh-a100.log)
 
-其中 `final-repo-*-a100.log` 是清理前完成的全新板端构建后的最终端到端复测日志；两次均生成了可播放的 24 kHz WAV，且运行退出后未留下独立的 `tts_file_demo` 进程。
+其中 `final-repo-*-a100.log` 是清理前完成的全新板端构建后的最终端到端复测日志；两次均生成了可播放的 24 kHz WAV，且运行退出后未留下独立的 `tts_file_demo` 进程。`core2-en-a100-short.log` 和 `core2-zh-a100.log` 是新增的部分 A100 核验证日志，包含 EP 初始化时打印的实际 affinity；`core2-en-a100.log` 另外记录了长文本压力测试。
 
 参考 WAV：
 
@@ -241,19 +244,47 @@ cd spacemit/case/model-zoo-k3
   'This is a spacemit k3 kokoro performance test.' 3
 ```
 
-`run_a100.sh` 默认：
+`run_a100.sh` 默认使用全部 A100 核，但现在可以通过 `--cores` 精确选择参与计算的核。
 
 ```text
 SPACEMIT_TTS_EP_THREADS=8
+SPACEMIT_TTS_EP_CORES=8-15
 SPACEMIT_TTS_EP_AFFINITY=8;9;10;11;12;13;14;15
 SPACEMIT_TTS_WARMUP_RUNS=1
+```
+
+`SPACEMIT_TTS_EP_CORES` 是面向用户的核列表参数，支持逗号列表、范围、空格或分号分隔。例如：
+
+```bash
+# 只使用两个 A100 核 8、10；EP worker 数自动设置为 2
+./run_a100.sh zh kokoro-zh-a100-2core.wav \
+  '这是一个语音合成测试' --cores 8,10
+
+# 使用四个 A100 核 8、10、12、14
+./run_a100.sh en kokoro-en-a100-4core.wav \
+  'This is a spacemit k3 kokoro performance test.' --cores 8,10,12,14
+
+# 使用连续的 A100 核 8-11，并重复 3 次测试稳态 RTF
+./run_a100.sh zh kokoro-zh-a100-4core-repeat3.wav \
+  '这是一个语音合成测试' 3 --cores 8-11
+```
+
+推荐使用逗号或范围格式；分号格式必须加引号，避免被 shell 当成命令分隔符。脚本会自动把核列表转换为 SpaceMIT EP 需要的 `8;10;12` 格式，并将 `SPACEMIT_TTS_EP_THREADS` 设置为所选核数。如果手工同时设置了 `SPACEMIT_TTS_EP_THREADS`，它必须与核数一致，否则脚本直接报错。
+
+参数优先级为：命令行 `--cores` > 环境变量 `SPACEMIT_TTS_EP_CORES` > 兼容旧参数 `SPACEMIT_TTS_EP_AFFINITY` > 默认 `8-15`。例如：
+
+```bash
+SPACEMIT_TTS_EP_CORES=8,11 \
+  ./run_a100.sh zh output.wav '这是一个语音合成测试'
 ```
 
 通用入口：
 
 ```text
-run.sh <zh|en> <output.wav> <text> [spacemit|cpu] [ep-affinity] [repeat]
+run.sh <zh|en> <output.wav> <text> [spacemit|cpu] [ep-cores] [repeat]
 ```
+
+直接使用通用入口时，同样可以指定 `8,10`、`8-11` 等核列表；CPU provider 会忽略 EP 核绑定参数。
 
 CPU 对照示例：
 
@@ -292,12 +323,11 @@ for status in /proc/$pid/task/*/status; do
 done
 ```
 
-应观察到：
+应观察到所选核列表对应的 EP worker。例如使用 `--cores 8,10` 时，应看到两个 EP worker 的 `Cpus_allowed_list` 分别为 `8` 和 `10`；应用和 ORT CPU fallback 线程仍可能显示为 `0-7`。
 
-- 8 个 EP worker 分别为 `Cpus_allowed_list: 8` 到 `15`；
-- 应用和 ORT CPU fallback 线程为 `0-7`。
+SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对整个进程执行 `taskset -c 8-15`。本仓库通过 SpaceMIT EP 的 `SPACEMIT_EP_INTRA_THREAD_AFFINITY` 参数只绑定 EP worker，不会强制移动应用线程或 CPU fallback 线程。
 
-SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对整个进程执行 `taskset -c 8-15`。本仓库通过 SpaceMIT EP 的 `SPACEMIT_EP_INTRA_THREAD_AFFINITY` 参数直接绑定 EP worker。
+核数越少不一定线性变慢，但会减少 A100 占用。当前实测矩阵已经表明中文从 8 个 EP worker 减少到 4 个仍约为 RTF `0.295`，英文 4 个约为 RTF `0.445`；如果业务只要求实时合成，可以优先尝试 2 或 4 个 A100 核，再根据实际文本长度和并发量选择配置。
 
 ## 11. 已知限制
 
@@ -322,9 +352,13 @@ SSH 会话本身可能继承 `Cpus_allowed_list: 0-7`，所以不建议直接对
 - `CMakeLists.txt`
   - 支持从 `.local-deps` 查找 FFTW/libcurl，方便无 root 的板端构建。
 - `run_a100.sh`
-  - 默认启用 8 个 A100 EP worker和一次 warmup。
+  - 支持 `--cores 8,10`、`--cores 8-11` 等具体核列表；
+  - 根据所选核数自动设置 EP worker 数，并检查手工设置的线程数是否匹配；
+  - 默认使用 A100 `8-15` 和一次 warmup。
+- `affinity.sh`
+  - 统一解析逗号、范围、空格和分号格式，转换为 SpaceMIT EP 的分号列表。
 - `run.sh`
-  - 支持语言、provider、affinity、repeat 和可配置 ORT 根目录；
+  - 支持语言、provider、具体 EP 核列表、repeat 和可配置 ORT 根目录；
   - 英文使用仓库内模型，缺少中文 ONNX 时走官方自动下载。
 
 ## 13. 验证清单

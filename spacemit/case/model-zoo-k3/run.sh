@@ -1,15 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
+# shellcheck source=affinity.sh
+source "$script_dir/affinity.sh"
+
 if [[ $# -lt 3 || $# -gt 6 ]]; then
-  echo "Usage: $0 <zh|en> <output.wav> <text> [spacemit|cpu] [ep-affinity] [repeat]" >&2
+  echo "Usage: $0 <zh|en> <output.wav> <text> [spacemit|cpu] [ep-cores] [repeat]" >&2
+  echo "  ep-cores: comma/range list, e.g. 8,10,12 or 8-15" >&2
   exit 2
 fi
 lang="$1"
 out="$2"
 text="$3"
 provider="${4:-spacemit}"
-ep_affinity="${5:-}"
+ep_cores="${5:-}"
 repeat="${6:-1}"
 if ! [[ "$repeat" =~ ^[1-9][0-9]*$ ]]; then
   echo "repeat must be a positive integer" >&2
@@ -26,7 +31,6 @@ case "$provider" in
   *) echo "provider must be spacemit or cpu" >&2; exit 2;;
 esac
 
-script_dir=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)
 repo_root=$(cd -- "$script_dir/../../.." && pwd)
 tts_root="$repo_root/spacemit/model-zoo-tts"
 ort_root="${SPACEMIT_ORT_ROOT:-/home/spacemit/projects/qwen3-tts/spacemit-ort.riscv64.2.0.6}"
@@ -45,9 +49,20 @@ export HOME="$case_home"
 export LD_LIBRARY_PATH="$ort_root/lib:/usr/lib/riscv64-linux-gnu:${LD_LIBRARY_PATH:+$LD_LIBRARY_PATH}"
 export SPACEMIT_TTS_WARMUP_RUNS="${SPACEMIT_TTS_WARMUP_RUNS:-1}"
 if [[ "$provider" == spacemit ]]; then
-  export SPACEMIT_TTS_EP_THREADS="${SPACEMIT_TTS_EP_THREADS:-4}"
-  if [[ -n "$ep_affinity" ]]; then
+  if [[ -z "$ep_cores" ]]; then
+    ep_cores="${SPACEMIT_TTS_EP_CORES:-${SPACEMIT_TTS_EP_AFFINITY:-}}"
+  fi
+  if [[ -n "$ep_cores" ]]; then
+    ep_affinity=$(normalize_core_list "$ep_cores")
+    core_count=$(core_count_from_affinity "$ep_affinity")
+    if [[ -n "${SPACEMIT_TTS_EP_THREADS:-}" && "$SPACEMIT_TTS_EP_THREADS" != "$core_count" ]]; then
+      echo "SPACEMIT_TTS_EP_THREADS=$SPACEMIT_TTS_EP_THREADS does not match the selected core count $core_count" >&2
+      exit 2
+    fi
+    export SPACEMIT_TTS_EP_THREADS="$core_count"
     export SPACEMIT_TTS_EP_AFFINITY="$ep_affinity"
+  else
+    export SPACEMIT_TTS_EP_THREADS="${SPACEMIT_TTS_EP_THREADS:-4}"
   fi
 fi
 

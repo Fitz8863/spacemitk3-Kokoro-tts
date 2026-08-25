@@ -511,9 +511,11 @@ ErrorInfo KokoroBackend::initialize(const TtsConfig& config) {
             // images commonly reserve A100 cores 8-15 for AI workloads; the
             // SpaceMIT EP accepts a semicolon-separated core list matching
             // SPACEMIT_EP_INTRA_THREAD_NUM.
+            std::string ep_affinity;
             if (const char* affinity = std::getenv("SPACEMIT_TTS_EP_AFFINITY")) {
                 if (affinity[0] != '\0') {
-                    ep_opts["SPACEMIT_EP_INTRA_THREAD_AFFINITY"] = affinity;
+                    ep_affinity = affinity;
+                    ep_opts["SPACEMIT_EP_INTRA_THREAD_AFFINITY"] = ep_affinity;
                 }
             }
             if (const char* ov = std::getenv("SPACEMIT_EP_DISABLE_OP_NAME_FILTER")) {
@@ -521,7 +523,11 @@ ErrorInfo KokoroBackend::initialize(const TtsConfig& config) {
             }
             Ort::Status st = Ort::SessionOptionsSpaceMITEnvInit(session_options, ep_opts);
             if (st.IsOK()) {
-                std::cout << "[Kokoro] SpaceMIT EP initialized (ep_threads=" << ep_threads << ")" << std::endl;
+                std::cout << "[Kokoro] SpaceMIT EP initialized (ep_threads=" << ep_threads;
+                if (!ep_affinity.empty()) {
+                    std::cout << ", affinity=" << ep_affinity;
+                }
+                std::cout << ")" << std::endl;
             } else {
                 std::cerr << "[Kokoro] SpaceMIT EP init failed: " << st.GetErrorMessage()
                             << ", fallback to CPU" << std::endl;
