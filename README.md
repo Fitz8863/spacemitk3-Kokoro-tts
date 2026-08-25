@@ -211,6 +211,8 @@ cmake --build spacemit/model-zoo-tts/build-k3 -j4
 spacemit/model-zoo-tts/build-k3/bin/tts_file_demo
 ```
 
+注意：`build-k3` 和其中的二进制文件不会提交到 GitHub；重新克隆仓库或拉取本次交互模式修改后，需要在板端重新执行上面的 CMake 构建。运行脚本现在会在二进制不存在时打印对应的构建命令，而不是直接显示 shell 的“没有那个文件或目录”。
+
 本次板端复核构建结果：
 
 ```text

@@ -88,10 +88,23 @@ if [[ "$provider" == spacemit ]] && command -v spacemit-tcm-smi >/dev/null 2>&1;
   spacemit-tcm-smi -c >/dev/null 2>&1 || true
 fi
 
+demo="$tts_root/build-k3/bin/tts_file_demo"
+if [[ ! -x "$demo" ]]; then
+  cat >&2 <<EOF
+错误：找不到可执行文件：$demo
+请先在板端编译 TTS demo：
+  cmake -S "$tts_root" -B "$tts_root/build-k3" \
+    -DONNXRUNTIME_INCLUDE_DIR="$ort_root/include" \
+    -DONNXRUNTIME_LIB="$ort_root/lib/libonnxruntime.so"
+  cmake --build "$tts_root/build-k3" -j4
+EOF
+  exit 127
+fi
+
 if "$interactive"; then
-  exec "$tts_root/build-k3/bin/tts_file_demo" \
+  exec "$demo" \
     -l "$engine" --provider "$provider" --voice "$voice" -o "$out"
 else
-  exec "$tts_root/build-k3/bin/tts_file_demo" \
+  exec "$demo" \
     -p "$text" -l "$engine" --provider "$provider" --voice "$voice" -o "$out" --repeat "$repeat"
 fi
