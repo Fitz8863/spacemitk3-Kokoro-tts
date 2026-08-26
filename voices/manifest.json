@@ -1,12 +1,40 @@
 {
-  "source": "https://huggingface.co/hexgrad",
+  "source": "official Kokoro voice tensors",
+  "sources": [
+    "https://modelscope.cn/models/AI-ModelScope/Kokoro-82M",
+    "https://modelscope.cn/models/AI-ModelScope/Kokoro-82M-v1.1-zh",
+    "https://huggingface.co/hexgrad"
+  ],
   "format": "numpy float32, final dimension 256",
   "languages": {
     "en": {
       "model": "hexgrad/Kokoro-82M",
-      "attempted": 2,
-      "count": 2,
+      "available": 54,
+      "attempted": 54,
+      "count": 54,
       "voices": [
+        {
+          "voice": "af_alloy",
+          "path": "voices/en/af_alloy.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_alloy.pt"
+        },
+        {
+          "voice": "af_aoede",
+          "path": "voices/en/af_aoede.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_aoede.pt"
+        },
         {
           "voice": "af_bella",
           "path": "voices/en/af_bella.npy",
@@ -15,8 +43,107 @@
             1,
             256
           ],
-          "status": "converted-local",
-          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+          "status": "checked-in",
+          "source": "existing checked-in voice tensor"
+        },
+        {
+          "voice": "af_heart",
+          "path": "voices/en/af_heart.bin",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_heart.pt"
+        },
+        {
+          "voice": "af_jessica",
+          "path": "voices/en/af_jessica.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_jessica.pt"
+        },
+        {
+          "voice": "af_kore",
+          "path": "voices/en/af_kore.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_kore.pt"
+        },
+        {
+          "voice": "af_nicole",
+          "path": "voices/en/af_nicole.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_nicole.pt"
+        },
+        {
+          "voice": "af_nova",
+          "path": "voices/en/af_nova.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_nova.pt"
+        },
+        {
+          "voice": "af_river",
+          "path": "voices/en/af_river.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_river.pt"
+        },
+        {
+          "voice": "af_sarah",
+          "path": "voices/en/af_sarah.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_sarah.pt"
+        },
+        {
+          "voice": "af_sky",
+          "path": "voices/en/af_sky.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/af_sky.pt"
+        },
+        {
+          "voice": "am_adam",
+          "path": "voices/en/am_adam.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_adam.pt"
         },
         {
           "voice": "am_echo",
@@ -26,17 +153,513 @@
             1,
             256
           ],
-          "status": "converted-local",
-          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+          "status": "checked-in",
+          "source": "existing checked-in voice tensor"
+        },
+        {
+          "voice": "am_eric",
+          "path": "voices/en/am_eric.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_eric.pt"
+        },
+        {
+          "voice": "am_fenrir",
+          "path": "voices/en/am_fenrir.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_fenrir.pt"
+        },
+        {
+          "voice": "am_liam",
+          "path": "voices/en/am_liam.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_liam.pt"
+        },
+        {
+          "voice": "am_michael",
+          "path": "voices/en/am_michael.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_michael.pt"
+        },
+        {
+          "voice": "am_onyx",
+          "path": "voices/en/am_onyx.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_onyx.pt"
+        },
+        {
+          "voice": "am_puck",
+          "path": "voices/en/am_puck.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_puck.pt"
+        },
+        {
+          "voice": "am_santa",
+          "path": "voices/en/am_santa.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/am_santa.pt"
+        },
+        {
+          "voice": "bf_alice",
+          "path": "voices/en/bf_alice.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bf_alice.pt"
+        },
+        {
+          "voice": "bf_emma",
+          "path": "voices/en/bf_emma.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bf_emma.pt"
+        },
+        {
+          "voice": "bf_isabella",
+          "path": "voices/en/bf_isabella.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bf_isabella.pt"
+        },
+        {
+          "voice": "bf_lily",
+          "path": "voices/en/bf_lily.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bf_lily.pt"
+        },
+        {
+          "voice": "bm_daniel",
+          "path": "voices/en/bm_daniel.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bm_daniel.pt"
+        },
+        {
+          "voice": "bm_fable",
+          "path": "voices/en/bm_fable.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bm_fable.pt"
+        },
+        {
+          "voice": "bm_george",
+          "path": "voices/en/bm_george.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bm_george.pt"
+        },
+        {
+          "voice": "bm_lewis",
+          "path": "voices/en/bm_lewis.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/bm_lewis.pt"
+        },
+        {
+          "voice": "ef_dora",
+          "path": "voices/en/ef_dora.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/ef_dora.pt"
+        },
+        {
+          "voice": "em_alex",
+          "path": "voices/en/em_alex.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/em_alex.pt"
+        },
+        {
+          "voice": "em_santa",
+          "path": "voices/en/em_santa.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/em_santa.pt"
+        },
+        {
+          "voice": "ff_siwis",
+          "path": "voices/en/ff_siwis.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/ff_siwis.pt"
+        },
+        {
+          "voice": "hf_alpha",
+          "path": "voices/en/hf_alpha.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/hf_alpha.pt"
+        },
+        {
+          "voice": "hf_beta",
+          "path": "voices/en/hf_beta.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/hf_beta.pt"
+        },
+        {
+          "voice": "hm_omega",
+          "path": "voices/en/hm_omega.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/hm_omega.pt"
+        },
+        {
+          "voice": "hm_psi",
+          "path": "voices/en/hm_psi.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/hm_psi.pt"
+        },
+        {
+          "voice": "if_sara",
+          "path": "voices/en/if_sara.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/if_sara.pt"
+        },
+        {
+          "voice": "im_nicola",
+          "path": "voices/en/im_nicola.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/im_nicola.pt"
+        },
+        {
+          "voice": "jf_alpha",
+          "path": "voices/en/jf_alpha.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/jf_alpha.pt"
+        },
+        {
+          "voice": "jf_gongitsune",
+          "path": "voices/en/jf_gongitsune.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/jf_gongitsune.pt"
+        },
+        {
+          "voice": "jf_nezumi",
+          "path": "voices/en/jf_nezumi.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/jf_nezumi.pt"
+        },
+        {
+          "voice": "jf_tebukuro",
+          "path": "voices/en/jf_tebukuro.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/jf_tebukuro.pt"
+        },
+        {
+          "voice": "jm_kumo",
+          "path": "voices/en/jm_kumo.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/jm_kumo.pt"
+        },
+        {
+          "voice": "pf_dora",
+          "path": "voices/en/pf_dora.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/pf_dora.pt"
+        },
+        {
+          "voice": "pm_alex",
+          "path": "voices/en/pm_alex.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/pm_alex.pt"
+        },
+        {
+          "voice": "pm_santa",
+          "path": "voices/en/pm_santa.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/pm_santa.pt"
+        },
+        {
+          "voice": "zf_xiaobei",
+          "path": "voices/en/zf_xiaobei.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zf_xiaobei.pt"
+        },
+        {
+          "voice": "zf_xiaoni",
+          "path": "voices/en/zf_xiaoni.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zf_xiaoni.pt"
+        },
+        {
+          "voice": "zf_xiaoxiao",
+          "path": "voices/en/zf_xiaoxiao.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zf_xiaoxiao.pt"
+        },
+        {
+          "voice": "zf_xiaoyi",
+          "path": "voices/en/zf_xiaoyi.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zf_xiaoyi.pt"
+        },
+        {
+          "voice": "zm_yunjian",
+          "path": "voices/en/zm_yunjian.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zm_yunjian.pt"
+        },
+        {
+          "voice": "zm_yunxi",
+          "path": "voices/en/zm_yunxi.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zm_yunxi.pt"
+        },
+        {
+          "voice": "zm_yunxia",
+          "path": "voices/en/zm_yunxia.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zm_yunxia.pt"
+        },
+        {
+          "voice": "zm_yunyang",
+          "path": "voices/en/zm_yunyang.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M/repo?Revision=master&FilePath=voices/zm_yunyang.pt"
         }
       ],
       "failed": []
     },
     "zh": {
       "model": "hexgrad/Kokoro-82M-v1.1-zh",
-      "attempted": 1,
-      "count": 1,
+      "available": 104,
+      "attempted": 103,
+      "count": 104,
       "voices": [
+        {
+          "voice": "af_maple",
+          "path": "voices/zh/af_maple.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/af_maple.pt"
+        },
+        {
+          "voice": "af_sol",
+          "path": "voices/zh/af_sol.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/af_sol.pt"
+        },
+        {
+          "voice": "bf_vale",
+          "path": "voices/zh/bf_vale.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/bf_vale.pt"
+        },
+        {
+          "voice": "zf_001",
+          "path": "voices/zh/zf_001.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "checked-in",
+          "source": "existing checked-in voice tensor"
+        },
         {
           "voice": "zf_002",
           "path": "voices/zh/zf_002.npy",
@@ -45,8 +668,1097 @@
             1,
             256
           ],
-          "status": "converted-local",
-          "source": "local .pt converted with scripts/import_kokoro_voices.py"
+          "status": "checked-in",
+          "source": "existing checked-in voice tensor"
+        },
+        {
+          "voice": "zf_003",
+          "path": "voices/zh/zf_003.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_003.pt"
+        },
+        {
+          "voice": "zf_004",
+          "path": "voices/zh/zf_004.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_004.pt"
+        },
+        {
+          "voice": "zf_005",
+          "path": "voices/zh/zf_005.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_005.pt"
+        },
+        {
+          "voice": "zf_006",
+          "path": "voices/zh/zf_006.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_006.pt"
+        },
+        {
+          "voice": "zf_007",
+          "path": "voices/zh/zf_007.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_007.pt"
+        },
+        {
+          "voice": "zf_008",
+          "path": "voices/zh/zf_008.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_008.pt"
+        },
+        {
+          "voice": "zf_017",
+          "path": "voices/zh/zf_017.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_017.pt"
+        },
+        {
+          "voice": "zf_018",
+          "path": "voices/zh/zf_018.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_018.pt"
+        },
+        {
+          "voice": "zf_019",
+          "path": "voices/zh/zf_019.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_019.pt"
+        },
+        {
+          "voice": "zf_021",
+          "path": "voices/zh/zf_021.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_021.pt"
+        },
+        {
+          "voice": "zf_022",
+          "path": "voices/zh/zf_022.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_022.pt"
+        },
+        {
+          "voice": "zf_023",
+          "path": "voices/zh/zf_023.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_023.pt"
+        },
+        {
+          "voice": "zf_024",
+          "path": "voices/zh/zf_024.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_024.pt"
+        },
+        {
+          "voice": "zf_026",
+          "path": "voices/zh/zf_026.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_026.pt"
+        },
+        {
+          "voice": "zf_027",
+          "path": "voices/zh/zf_027.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_027.pt"
+        },
+        {
+          "voice": "zf_028",
+          "path": "voices/zh/zf_028.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_028.pt"
+        },
+        {
+          "voice": "zf_032",
+          "path": "voices/zh/zf_032.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_032.pt"
+        },
+        {
+          "voice": "zf_036",
+          "path": "voices/zh/zf_036.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_036.pt"
+        },
+        {
+          "voice": "zf_038",
+          "path": "voices/zh/zf_038.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_038.pt"
+        },
+        {
+          "voice": "zf_039",
+          "path": "voices/zh/zf_039.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_039.pt"
+        },
+        {
+          "voice": "zf_040",
+          "path": "voices/zh/zf_040.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_040.pt"
+        },
+        {
+          "voice": "zf_042",
+          "path": "voices/zh/zf_042.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_042.pt"
+        },
+        {
+          "voice": "zf_043",
+          "path": "voices/zh/zf_043.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_043.pt"
+        },
+        {
+          "voice": "zf_044",
+          "path": "voices/zh/zf_044.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_044.pt"
+        },
+        {
+          "voice": "zf_046",
+          "path": "voices/zh/zf_046.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_046.pt"
+        },
+        {
+          "voice": "zf_047",
+          "path": "voices/zh/zf_047.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_047.pt"
+        },
+        {
+          "voice": "zf_048",
+          "path": "voices/zh/zf_048.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_048.pt"
+        },
+        {
+          "voice": "zf_049",
+          "path": "voices/zh/zf_049.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_049.pt"
+        },
+        {
+          "voice": "zf_051",
+          "path": "voices/zh/zf_051.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_051.pt"
+        },
+        {
+          "voice": "zf_059",
+          "path": "voices/zh/zf_059.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_059.pt"
+        },
+        {
+          "voice": "zf_060",
+          "path": "voices/zh/zf_060.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_060.pt"
+        },
+        {
+          "voice": "zf_067",
+          "path": "voices/zh/zf_067.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_067.pt"
+        },
+        {
+          "voice": "zf_070",
+          "path": "voices/zh/zf_070.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_070.pt"
+        },
+        {
+          "voice": "zf_071",
+          "path": "voices/zh/zf_071.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_071.pt"
+        },
+        {
+          "voice": "zf_072",
+          "path": "voices/zh/zf_072.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_072.pt"
+        },
+        {
+          "voice": "zf_073",
+          "path": "voices/zh/zf_073.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_073.pt"
+        },
+        {
+          "voice": "zf_074",
+          "path": "voices/zh/zf_074.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_074.pt"
+        },
+        {
+          "voice": "zf_075",
+          "path": "voices/zh/zf_075.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_075.pt"
+        },
+        {
+          "voice": "zf_076",
+          "path": "voices/zh/zf_076.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_076.pt"
+        },
+        {
+          "voice": "zf_077",
+          "path": "voices/zh/zf_077.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_077.pt"
+        },
+        {
+          "voice": "zf_078",
+          "path": "voices/zh/zf_078.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_078.pt"
+        },
+        {
+          "voice": "zf_079",
+          "path": "voices/zh/zf_079.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_079.pt"
+        },
+        {
+          "voice": "zf_083",
+          "path": "voices/zh/zf_083.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_083.pt"
+        },
+        {
+          "voice": "zf_084",
+          "path": "voices/zh/zf_084.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_084.pt"
+        },
+        {
+          "voice": "zf_085",
+          "path": "voices/zh/zf_085.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_085.pt"
+        },
+        {
+          "voice": "zf_086",
+          "path": "voices/zh/zf_086.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_086.pt"
+        },
+        {
+          "voice": "zf_087",
+          "path": "voices/zh/zf_087.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_087.pt"
+        },
+        {
+          "voice": "zf_088",
+          "path": "voices/zh/zf_088.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_088.pt"
+        },
+        {
+          "voice": "zf_090",
+          "path": "voices/zh/zf_090.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_090.pt"
+        },
+        {
+          "voice": "zf_092",
+          "path": "voices/zh/zf_092.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_092.pt"
+        },
+        {
+          "voice": "zf_093",
+          "path": "voices/zh/zf_093.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_093.pt"
+        },
+        {
+          "voice": "zf_094",
+          "path": "voices/zh/zf_094.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_094.pt"
+        },
+        {
+          "voice": "zf_099",
+          "path": "voices/zh/zf_099.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zf_099.pt"
+        },
+        {
+          "voice": "zf_xiaobei",
+          "path": "voices/zh/zf_xiaobei.bin",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "checked-in",
+          "source": "SpaceMIT official model package or previous import"
+        },
+        {
+          "voice": "zm_009",
+          "path": "voices/zh/zm_009.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_009.pt"
+        },
+        {
+          "voice": "zm_010",
+          "path": "voices/zh/zm_010.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_010.pt"
+        },
+        {
+          "voice": "zm_011",
+          "path": "voices/zh/zm_011.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_011.pt"
+        },
+        {
+          "voice": "zm_012",
+          "path": "voices/zh/zm_012.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_012.pt"
+        },
+        {
+          "voice": "zm_013",
+          "path": "voices/zh/zm_013.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_013.pt"
+        },
+        {
+          "voice": "zm_014",
+          "path": "voices/zh/zm_014.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_014.pt"
+        },
+        {
+          "voice": "zm_015",
+          "path": "voices/zh/zm_015.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_015.pt"
+        },
+        {
+          "voice": "zm_016",
+          "path": "voices/zh/zm_016.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_016.pt"
+        },
+        {
+          "voice": "zm_020",
+          "path": "voices/zh/zm_020.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_020.pt"
+        },
+        {
+          "voice": "zm_025",
+          "path": "voices/zh/zm_025.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_025.pt"
+        },
+        {
+          "voice": "zm_029",
+          "path": "voices/zh/zm_029.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_029.pt"
+        },
+        {
+          "voice": "zm_030",
+          "path": "voices/zh/zm_030.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_030.pt"
+        },
+        {
+          "voice": "zm_031",
+          "path": "voices/zh/zm_031.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_031.pt"
+        },
+        {
+          "voice": "zm_033",
+          "path": "voices/zh/zm_033.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_033.pt"
+        },
+        {
+          "voice": "zm_034",
+          "path": "voices/zh/zm_034.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_034.pt"
+        },
+        {
+          "voice": "zm_035",
+          "path": "voices/zh/zm_035.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_035.pt"
+        },
+        {
+          "voice": "zm_037",
+          "path": "voices/zh/zm_037.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_037.pt"
+        },
+        {
+          "voice": "zm_041",
+          "path": "voices/zh/zm_041.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_041.pt"
+        },
+        {
+          "voice": "zm_045",
+          "path": "voices/zh/zm_045.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_045.pt"
+        },
+        {
+          "voice": "zm_050",
+          "path": "voices/zh/zm_050.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_050.pt"
+        },
+        {
+          "voice": "zm_052",
+          "path": "voices/zh/zm_052.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_052.pt"
+        },
+        {
+          "voice": "zm_053",
+          "path": "voices/zh/zm_053.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_053.pt"
+        },
+        {
+          "voice": "zm_054",
+          "path": "voices/zh/zm_054.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_054.pt"
+        },
+        {
+          "voice": "zm_055",
+          "path": "voices/zh/zm_055.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_055.pt"
+        },
+        {
+          "voice": "zm_056",
+          "path": "voices/zh/zm_056.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_056.pt"
+        },
+        {
+          "voice": "zm_057",
+          "path": "voices/zh/zm_057.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_057.pt"
+        },
+        {
+          "voice": "zm_058",
+          "path": "voices/zh/zm_058.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_058.pt"
+        },
+        {
+          "voice": "zm_061",
+          "path": "voices/zh/zm_061.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_061.pt"
+        },
+        {
+          "voice": "zm_062",
+          "path": "voices/zh/zm_062.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_062.pt"
+        },
+        {
+          "voice": "zm_063",
+          "path": "voices/zh/zm_063.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_063.pt"
+        },
+        {
+          "voice": "zm_064",
+          "path": "voices/zh/zm_064.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_064.pt"
+        },
+        {
+          "voice": "zm_065",
+          "path": "voices/zh/zm_065.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_065.pt"
+        },
+        {
+          "voice": "zm_066",
+          "path": "voices/zh/zm_066.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_066.pt"
+        },
+        {
+          "voice": "zm_068",
+          "path": "voices/zh/zm_068.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_068.pt"
+        },
+        {
+          "voice": "zm_069",
+          "path": "voices/zh/zm_069.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_069.pt"
+        },
+        {
+          "voice": "zm_080",
+          "path": "voices/zh/zm_080.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_080.pt"
+        },
+        {
+          "voice": "zm_081",
+          "path": "voices/zh/zm_081.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_081.pt"
+        },
+        {
+          "voice": "zm_082",
+          "path": "voices/zh/zm_082.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_082.pt"
+        },
+        {
+          "voice": "zm_089",
+          "path": "voices/zh/zm_089.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_089.pt"
+        },
+        {
+          "voice": "zm_091",
+          "path": "voices/zh/zm_091.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_091.pt"
+        },
+        {
+          "voice": "zm_095",
+          "path": "voices/zh/zm_095.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_095.pt"
+        },
+        {
+          "voice": "zm_096",
+          "path": "voices/zh/zm_096.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_096.pt"
+        },
+        {
+          "voice": "zm_097",
+          "path": "voices/zh/zm_097.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_097.pt"
+        },
+        {
+          "voice": "zm_098",
+          "path": "voices/zh/zm_098.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_098.pt"
+        },
+        {
+          "voice": "zm_100",
+          "path": "voices/zh/zm_100.npy",
+          "shape": [
+            510,
+            1,
+            256
+          ],
+          "status": "downloaded-modelscope",
+          "source": "https://modelscope.cn/api/v1/models/AI-ModelScope/Kokoro-82M-v1.1-zh/repo?Revision=master&FilePath=voices/zm_100.pt"
         }
       ],
       "failed": []

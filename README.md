@@ -137,8 +137,8 @@ flowchart LR
 ├── voices/                         # 独立音色目录（按 en/zh 分类）
 │   ├── README.md
 │   ├── manifest.json
-│   ├── en/                         # af_heart、af_bella、am_echo
-│   └── zh/                         # zf_001、zf_002、zf_xiaobei
+│   ├── en/                         # 54 个 Kokoro 英文/兼容音色 style tensor
+│   └── zh/                         # 103 个中文音色 + zf_xiaobei 兼容音色
 ├── scripts/
 │   ├── download_models.sh          # 手工下载两套官方包并校验 MD5
 │   ├── import_kokoro_voices.py    # 将官方 .pt 转为 .npy
@@ -181,16 +181,30 @@ flowchart LR
 
 ## 6. 独立音色目录和运行时选择
 
-仓库将音色从 ONNX 模型包中单独拆出，目录为 `voices/en` 和 `voices/zh`。当前提交的可直接使用音色是：
+仓库将 Kokoro 的 style tensor 从 ONNX 模型包中单独拆出，目录为 `voices/en` 和
+`voices/zh`。当前已经从魔搭社区 ModelScope 下载、转换并通过形状校验的文件都以
+NumPy `float32` 保存为 `[510, 1, 256]`；每个文件约 522 KB，适合随仓库发布。
 
-| 语言 | 当前提交 | 格式 |
-|---|---|---|
-| 英文 | `af_heart`、`af_bella`、`am_echo` | `.bin` / `.npy` |
-| 中文 | `zf_001`、`zf_002`、`zf_xiaobei` | `.npy` / `.bin` |
+### 6.1 当前已集成的音色数量
 
-官方音色总量和仓库实际提交量要区分：Kokoro v1.0 英文公开 54 个音色，`Kokoro-82M-v1.1-zh` 公开 103 个音色；受下载限流和仓库体积控制，本仓库只提交已经下载、转换、形状校验并在板端验证的批次。完整清单和每个文件的形状记录在 [`voices/manifest.json`](voices/manifest.json)。
+| 语言/目录 | 当前文件数 | 来源说明 |
+|---|---:|---|
+| `voices/en` | **54** | ModelScope `AI-ModelScope/Kokoro-82M` 的完整英文清单 |
+| `voices/zh` | **104** | ModelScope `AI-ModelScope/Kokoro-82M-v1.1-zh` 的 103 个官方音色，加上仓库原有的 `zf_xiaobei` 兼容音色 |
 
-列出当前目录中的实际文件：
+因此，当前仓库不是只包含 `af_heart`、`zf_001` 等少数示例，而是已经把 ModelScope
+可下载的英文 54 个、中文官方 103 个全部导入到独立目录。英文模型仓库中还带有若干
+跨语言/旧版命名的音色文件，这是上游清单的一部分；运行时应以对应语言目录中的
+实际文件为准。逐文件来源、格式和形状记录在 [`voices/manifest.json`](voices/manifest.json)。
+
+ModelScope 资源：
+
+- [AI-ModelScope/Kokoro-82M（英文）](https://modelscope.cn/models/AI-ModelScope/Kokoro-82M)
+- [AI-ModelScope/Kokoro-82M-v1.1-zh（中文）](https://modelscope.cn/models/AI-ModelScope/Kokoro-82M-v1.1-zh)
+
+### 6.2 列出和切换音色
+
+在板端案例目录中列出当前实际可用文件：
 
 ```bash
 cd spacemit/case/model-zoo-k3
@@ -198,23 +212,32 @@ cd spacemit/case/model-zoo-k3
 ./run_a100.sh zh --list-voices
 ```
 
-指定音色运行：
+通过 `--voice NAME` 选择音色。下面的示例分别使用本次从 ModelScope 新增的英文和中文
+音色：
 
 ```bash
-./run_a100.sh en en-bella.wav \
-  'This is a Bella voice test.' \
-  --voice af_bella --cores 8,10
+./run_a100.sh en alloy.wav \
+  'This is the Alloy voice downloaded from ModelScope.' \
+  --voice af_alloy --cores 8,10
 
-./run_a100.sh en en-echo.wav \
-  'This is an Echo voice test.' \
-  --voice am_echo --cores 8,10
+./run_a100.sh en nova.wav \
+  'This is the Nova voice downloaded from ModelScope.' \
+  --voice af_nova --cores 8,10
 
-./run_a100.sh zh zh-002.wav \
-  '这是第二个中文音色测试。' \
-  --voice zf_002 --cores 8,10
+./run_a100.sh zh zf003.wav \
+  '这是从魔搭社区下载的第三个中文音色测试。' \
+  --voice zf_003 --cores 8,10
 
+./run_a100.sh zh zm009.wav \
+  '这是从魔搭社区下载的中文男声音色测试。' \
+  --voice zm_009 --cores 8,10
+```
+
+交互模式启动时固定一个音色，后续每行文本都会使用该音色，并覆盖同一个输出 WAV：
+
+```bash
 ./run_a100.sh zh interactive.wav \
-  --interactive --voice zf_002 --cores 8,10
+  --interactive --voice zf_003 --cores 8,10
 ```
 
 也可以使用独立的外部音色目录，目录中放 `<voice>.bin` 或 `<voice>.npy`：
@@ -222,12 +245,19 @@ cd spacemit/case/model-zoo-k3
 ```bash
 ./run_a100.sh zh output.wav '你好' \
   --voices-dir /data/kokoro-voices/zh \
-  --voice zf_002
+  --voice zf_003
 ```
 
-加载优先级为：`--voice-path` / `KOKORO_VOICE_PATH` 单文件，其次是 `--voices-dir` / `KOKORO_VOICES_DIR`，最后回退到 ONNX 模型旁的 `voices/`。官方 `.pt` 音色不能只改扩展名，使用导入脚本转换：
+加载优先级为：`--voice-path` / `KOKORO_VOICE_PATH` 单文件，其次是
+`--voices-dir` / `KOKORO_VOICES_DIR`，最后回退到模型目录旁的 `voices/`。官方 `.pt`
+音色不能只改扩展名，必须先转换为后端支持的 `.npy` 或裸 `float32` `.bin`：
 
 ```bash
+# 默认从 ModelScope 下载；单个文件失败时自动回退到 Hugging Face
+python3 scripts/import_kokoro_voices.py \
+  --language all --keep-going
+
+# 只导入指定音色
 python3 scripts/import_kokoro_voices.py \
   --language zh --voice zf_003 --voice zm_009
 
@@ -237,7 +267,10 @@ python3 scripts/import_kokoro_voices.py \
   --voice af_nova --voice bf_emma
 ```
 
-脚本支持 `--keep-going`、`--force` 和 `--limit`，下载站点限流时可以分批、断点式继续。不会将 `.pt`、压缩包和下载缓存提交到仓库。更多说明见 [`voices/README.md`](voices/README.md)。
+导入脚本的下载顺序是 **ModelScope → Hugging Face**，适合中国大陆网络环境；支持
+`--keep-going`、`--force`、`--limit` 和 `--retries`，下载站点限流时可以分批、断点式
+继续。脚本不会把 `.pt` 下载缓存提交到仓库，只保留运行时需要的 `.npy`/`.bin`。详细
+格式约束和维护说明见 [`voices/README.md`](voices/README.md)。
 
 ## 6. 板端依赖
 
@@ -556,7 +589,8 @@ cmake --build spacemit/model-zoo-tts/build-k3 -j4
 并完成：
 
 - 中英文 A100 端到端 WAV 生成；
-- `af_bella`、`am_echo`、`zf_002` 三个独立目录音色在板端实际加载并生成 WAV；
+- `af_bella`、`am_echo`、`zf_002` 三个独立目录音色已在板端实际加载并生成 WAV；
+- ModelScope 新导入的 54 个英文和 103 个官方中文音色已完成本地下载、`.pt` 解包、`[510,1,256]` / `float32` 校验；尚未逐个在板端生成 WAV，板端验证仍建议先从 `af_alloy`、`af_nova`、`zf_003`、`zm_009` 抽样。
 - 交互模式连续输入两句并覆盖同一个输出文件；
 - WAV 格式检查：16-bit PCM、mono、24000 Hz；
 - 1/2/4/8 worker 性能矩阵；

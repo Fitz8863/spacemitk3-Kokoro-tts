@@ -98,7 +98,12 @@ SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
 
 ## 音色目录和运行时切换
 
-仓库根目录的 `voices/en`、`voices/zh` 是独立音色目录，运行脚本会按语言自动选择对应目录。查看当前实际已经安装的音色：
+仓库根目录的 `voices/en`、`voices/zh` 是独立音色目录，运行脚本会按语言自动选择对应
+目录。当前已随仓库提供：英文 **54** 个音色，中文 **104** 个文件（其中 103 个来自
+ModelScope 的 `Kokoro-82M-v1.1-zh`，另含原有 `zf_xiaobei` 兼容音色）。每个新导入的
+style tensor 为 `[510, 1, 256]` 的 `float32`，约 522 KB。
+
+查看板端当前实际安装的音色：
 
 ```bash
 ./run_a100.sh en --list-voices
@@ -108,24 +113,26 @@ SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
 选择音色名称：
 
 ```bash
-./run_a100.sh en bella.wav \
-  'This is a Bella voice test.' \
-  --voice af_bella --cores 8,10
+# ModelScope 英文音色
+./run_a100.sh en alloy.wav \
+  'This is the Alloy voice.' \
+  --voice af_alloy --cores 8,10
 
-./run_a100.sh en echo.wav \
-  'This is an Echo voice test.' \
-  --voice am_echo --cores 8,10
+# ModelScope 中文音色
+./run_a100.sh zh zf003.wav \
+  '这是第三个中文音色。' \
+  --voice zf_003 --cores 8,10
 
-./run_a100.sh zh zf002.wav \
-  '这是第二个中文音色测试。' \
-  --voice zf_002 --cores 8,10
+./run_a100.sh zh zm009.wav \
+  '这是中文男声音色。' \
+  --voice zm_009 --cores 8,10
 ```
 
 交互模式启动时固定一个音色，后续每行文本都会使用该音色并覆盖同一个输出 WAV：
 
 ```bash
 ./run_a100.sh zh interactive.wav \
-  --interactive --voice zf_002 --cores 8,10
+  --interactive --voice zf_003 --cores 8,10
 ```
 
 也可从模型目录之外加载音色：
@@ -133,9 +140,17 @@ SPACEMIT_ORT_ROOT=/path/to/spacemit-ort.riscv64.2.0.6 \
 ```bash
 ./run_a100.sh zh output.wav '你好' \
   --voices-dir /data/kokoro-voices/zh \
-  --voice zf_002
+  --voice zf_003
 ```
 
-外部目录中放 `<voice>.bin` 或 `<voice>.npy`。`.pt` 需要先用仓库根目录的
-`scripts/import_kokoro_voices.py` 转换；脚本支持 `--source-dir` 从本地 `.pt`
-文件离线导入。单文件 `--voice-path FILE` 的优先级高于目录搜索。
+外部目录中放 `<voice>.bin` 或 `<voice>.npy`。官方 `.pt` 需要先用仓库根目录的
+`scripts/import_kokoro_voices.py` 转换；脚本默认优先从 ModelScope 下载，失败后回退
+Hugging Face：
+
+```bash
+cd ../../..
+python3 scripts/import_kokoro_voices.py --language all --keep-going
+```
+
+单文件 `--voice-path FILE` 的优先级高于目录搜索。完整导入清单见根目录
+`voices/manifest.json`。
